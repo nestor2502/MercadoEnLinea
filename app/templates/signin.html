@@ -1,0 +1,29 @@
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form class="m-t" role="form" action = "/user/signin" method="POST" >
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" placeholder="email" required name="email">
+    </div>
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" placeholder="name" required name="name">
+    </div>
+    <div class="form-group">
+        <label for="phone">Teléfono</label>
+        <input type="text" class="form-control" id="phone" placeholder="phone" required name="phone">
+    </div>
+    <div class="form-group">
+        <label for="role">Rol</label>
+        <input type="text" class="form-control" id="role" placeholder="Role" required name="role">
+    </div>
+    <button type="submit" class="btn btn-primary block full-width m-b">Registrarse</button>
+</form>
