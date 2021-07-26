@@ -489,6 +489,12 @@ iframe {
   color: #fff;
 }
 
+.select-class{
+  width: 100%; 
+  text-align:center; 
+  border: 0px solid transparent;
+}
+
 
 /*//////////////////////////////////////////////////////////////////
 [ Responsive ]*/
