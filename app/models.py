@@ -34,7 +34,7 @@ class User(UserMixin,db.Model):
 		return custom_app_context.encrypt(password)
 		
 	def verify_password(self, password):
-		return custom_app_context.verify(password, self.password_hash)
+		return custom_app_context.verify(password, self.password)
 
 class Role(db.Model):
 	__tablename__ = 'role'

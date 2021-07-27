@@ -3,3 +3,4 @@ app/Mercado_Linea.db
 __pycache__/
 app/__pycache__/
 app/user/__pycache__/
+test.py
