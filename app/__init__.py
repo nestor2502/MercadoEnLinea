@@ -9,6 +9,8 @@ login_manager = LoginManager()
 login_manager.login_view = 'user.login'
 
 from .user import user
+from .products import products
+
 from app.models import db
 
 def create_app():
@@ -17,4 +19,5 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     app.register_blueprint(user)
+    app.register_blueprint(products)
     return app
