@@ -31,7 +31,7 @@ def login():
         password = request.form['password']
 
         if user_ctrl.login(email,password):
-            return redirect(url_for('index'))
+            return redirect(url_for('products.home'))
         else:
             return redirect(url_for('user.login'))
     return render_template('login.html')

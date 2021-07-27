@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+
+{% block title %}Vendedor{% endblock %}
+{% block content %}
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header mr-2">
+                    <img src="../static/img/Maanostítulo.png" width="60" height="60" alt="">
+                </div>
+                {% if current_user.role_id == 1 %}
+                  {% include "sidebar-vendedor.html" %}
+                {% endif %}
+                {% if current_user.role_id == 2 %}
+                  {% include "sidebar-comprador.html" %} 
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid" id="topbar">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info position-relative">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <!--<i class="fas fa-align-left"></i>-->
+                    </button>
+
+                    <form class="form-inline position-relative my-2">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" style="border-radius: 40px; width: 100%;">
+                      <button class="btn btn-search position-absolute" type="submit" style="border-radius: 40px;"><i class="fas fa-search" style="color: lightgrey;"></i>
+                      </button>
+                    </form>
+
+                    <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
+                      <span id="user-name">Juan García Lugo </span>
+                      <img src="https://ui-avatars.com/api/?name=Juan+García+Lugo&background=random&size=32&rounded=true">
+                    </div>
+                </div>
+            </nav>
+            <div id="main-content-bg">
+                <div id="main-content">
+
+                  <p>Main content works!</p>                        
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+  {% endblock %}
