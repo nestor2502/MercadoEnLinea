@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+
+{% block title %}Agregar Producto{% endblock %}
+{% block content %}
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header mr-2">
+                    <img src="../static/img/Maanostítulo.png" width="60" height="60" alt="">
+                </div>
+
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#" class="d-block p-3"><i class='fas fa-chart-pie mr-2 lead'></i></i>Mis productos</a>
+                    </li>
+                    <li>
+                        <a href="#" class="d-block p-3 "><i class='fas fa-user-circle mr-2 lead'></i></i>Perfil</a>
+                    </li>
+                    <li id="logout_sidebar_button">
+                        <a href="#" class="d-block p-3 "><i class='fas fa-sign-out-alt mr-2 lead'></i></i>cerrar sesión</a>
+                    </li>
+                    
+                </ul>
+                <!--<ul id="logout_sidebar_button" class="nav nav-sidebar">
+                    <li>
+                        <a href="#" class="d-block p-3 "><i class='fas fa-sign-out-alt mr-2 lead'></i></i>cerrar sesión</a>
+                    </li>
+                </ul>-->
+            </div>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid" id="topbar">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info position-relative">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <!--<i class="fas fa-align-left"></i>-->
+                    </button>
+
+                    <form class="form-inline position-relative my-2">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" style="border-radius: 40px; width: 100%;">
+                      <button class="btn btn-search position-absolute" type="submit" style="border-radius: 40px;"><i class="fas fa-search" style="color: lightgrey;"></i>
+                      </button>
+                    </form>
+
+                    <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
+                      <span id="user-name">{{current_user.name}} </span>
+                      <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
+                    </div>
+                </div>
+            </nav>
+            <div id="main-content-bg">
+                <div id="main-content">
+                    <form action="/upload_product" method="POST" enctype="multipart/form-data">
+                        <div class="form-group mt-5 col-md-12">
+                            <label>Nombre del producto</label>
+                            <input type="text" class="form-control" id="product-name"
+                            placeholder="Nombre de producto" required name="name">
+                        </div>
+
+                        <div class="mb-5 mt-5 position-relative"> <!-- Div price-img -->
+                            <div class="input-group mb-5 col-md-6 float-left">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control" id="price" placeholder="Precio" required name="price">
+                            </div>
+
+                            <!-- Upload image input-->
+                            <div class="input-group mb-5 ml-3 col-md-6 float-left px-2 py-2 rounded-pill bg-white shadow-sm">
+                                <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" required name="image" accept="image/*" >
+                                <label id="upload-label" for="upload" class="font-weight-light text-muted">Imagen del producto</label>
+                                <div class="input-group-append">
+                                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
+                                    <i class="fa fa-cloud-upload mr-2 text-muted"></i>
+                                    <small class="text-uppercase font-weight-bold text-muted">Subir imagen</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Uploaded image area-->
+                            
+                            <div class="image-area mt-4">
+                                {% if image%}
+                                    <img src="{{ url_for('upload', filename=image) }}" class="img-fluid  mx-auto d-block">
+                                {% endif %}
+                                {% if not image%}
+                                    <img id="imageResult" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
+                                {% endif %}
+                            </div>
+
+                            <!--
+                            <div class="col-md-6 product-img position-absolute text-center">
+                                <img src="assets/img/nike.jpeg" class="img-fluid rounded-circle avatar">
+                            </div>
+                            -->
+                        </div> <!-- end div price-img -->
+
+                        <div class="input-group-lg mb-5 my-20 col-md-12">
+                            <textarea id="productDescription" rows=5 class="form-control" placeholder="Descripción del producto" required name="description"></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <label>Descripción</label>
+                            <button type="submit" class="btn btn-success mb-5">Actualizar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "modal.html" %}
+{% endblock %}

@@ -50,30 +50,7 @@
         </div>
       </div>
     </div>
-
-
- <!--=== Modal ===-->
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="text-align: center;">
-        <div class="modal-body" id="flashes">
-          <img src="../static/img/error.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
-          <br>
-          <br>
-          <br>
-          {% for message in get_flashed_messages() %}
-           <p  class="modal-title p-b-51"> {{ message }}</p>
-           {% endfor %}
-        <div class="modal-footer" style="justify-content: center;">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Aceptar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-  {% endwith %}
+    {% include "modal.html" %}
   </body>
 
 
