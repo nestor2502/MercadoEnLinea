@@ -148,18 +148,18 @@ nav #topbar {
     padding: 10px;
     font-size: 1.1em;
     display: block;
-    color: #7283ac;
+    color: #0396A6;
 }
 
 #sidebar ul li a:hover {
     color: white;
-    background: #7283ac;
+    background: #0396A6;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: white;
-    background: #7283ac;
+    background: #0396A6;
 }
 
 a[data-toggle="collapse"] {
@@ -169,6 +169,7 @@ a[data-toggle="collapse"] {
 #logout_sidebar_button {
     position: fixed;
     bottom: 0;
+    width: 250px;
 }
 
 /* ---------------------------------------------------
