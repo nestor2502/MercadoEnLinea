@@ -47,7 +47,7 @@ a:focus {
 }
 
 .form-inline input {
-    width: 100%
+    width: 100%;
     left: 10px;
 }
 
@@ -121,7 +121,7 @@ nav #topbar {
     height: 100vh;
     z-index: 999;
     background: #FFE600;
-    color: var(--light);
+    color: #000;
     transition: all 0.4s;
 }
 
@@ -148,17 +148,18 @@ nav #topbar {
     padding: 10px;
     font-size: 1.1em;
     display: block;
+    color: #0396A6;
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #E5BE01;
+    color: white;
+    background: #0396A6;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: inherit;
-    background: #E5BE01;
+    color: white;
+    background: #0396A6;
 }
 
 a[data-toggle="collapse"] {
@@ -168,6 +169,7 @@ a[data-toggle="collapse"] {
 #logout_sidebar_button {
     position: fixed;
     bottom: 0;
+    width: 250px;
 }
 
 /* ---------------------------------------------------

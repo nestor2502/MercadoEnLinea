@@ -10,7 +10,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header mr-2">
-                    <img src="../static/img/Maanostítulo.png" width="60" height="60" alt="">
+                    <img src="../static/img/Maanostítulo.png" width="65" height="65" alt="">
                 </div>
                 {% if current_user.role_id == 1 %}
                   {% include "sidebar-vendedor.html" %}
@@ -40,8 +40,12 @@
                     </form>
 
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
-                      <span id="user-name">Juan García Lugo </span>
-                      <img src="https://ui-avatars.com/api/?name=Juan+García+Lugo&background=random&size=32&rounded=true">
+                      <span id="user-name">
+                       {% if current_user.is_authenticated %}
+                        Hi {{ current_user.name }}
+            
+                      <img src="https://ui-avatars.com/api/?name=Pepe Perez&background=random&size=32&rounded=true">
+                        {% endif %} </span>
                     </div>
                 </div>
             </nav>
