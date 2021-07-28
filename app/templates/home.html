@@ -52,7 +52,9 @@
             <div id="main-content-bg">
                 <div id="main-content">
 
-                  <p>Main content works!</p>                        
+                  {% if current_user.role_id == 1 %}
+                  {% include "homeSeller.html" %}
+                  {% endif %}                      
 
                 </div>
             </div>
