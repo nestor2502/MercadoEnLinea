@@ -134,12 +134,12 @@ def signin(email, name, phone, role):
         False if a issue happened, uses flask's flash feature to display the issue to the user.
     """
     if not is_valid_email(email):
-        flash("Email incorrecto, intenta con otro")
+        flash("Email incorrecto, intenta con otro",'error')
         return False
     
     already_registered = User.query.filter_by(email = email).first()
     if already_registered is not None:
-        flash("Ya existe un usuario con ese correo, por favor intenta con uno nuevo.")
+        flash("Ya existe un usuario con ese correo, por favor intenta con uno nuevo.",'error')
         return False
     
     #Checks if a role exists.
@@ -157,7 +157,7 @@ def signin(email, name, phone, role):
         db.session.add(registered_role)
         db.session.add(new_user)
         db.session.commit()
-        flash(f"Usuario registrado exitosamente, tu contraseña llegará al correo: {email}.")
+        flash(f"Usuario registrado exitosamente, tu contraseña llegará al correo: {email}.",'error')
     else:
         new_role = Role(role)
         db.session.add(new_role)
@@ -167,8 +167,8 @@ def signin(email, name, phone, role):
         db.session.add(new_role)
         db.session.add(new_user)
         db.session.commit()
-        flash(f"Usuario registrado exitosamente, tu contraseña llegará al correo: {email}.")
-        flash(f"Se creo el siguiente rol: {role}.")
+        flash(f"Usuario registrado exitosamente, tu contraseña llegará al correo: {email}.",'success')
+        flash(f"Se creo el siguiente rol: {role}.",'success')
     return True
 
         
@@ -194,13 +194,13 @@ def login(email, password):
         registered_user = User.query.filter_by(email = email).first()
     except Exception as e:
         print(e)
-        flash('Ocurrió un error, intente más tarde.')
+        flash('Ocurrió un error, intente más tarde.','error')
         return False
     if registered_user is not None and registered_user.verify_password(password):
         login_user(registered_user)
         return True
     else:
-        flash('Email o contraseña incorrectos, intente nuevamente.')
+        flash('Email o contraseña incorrectos, intente nuevamente.','error')
         return False
 
 

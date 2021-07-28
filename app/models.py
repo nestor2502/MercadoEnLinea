@@ -65,11 +65,10 @@ class Product(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
-	def __init__(self, name, description, price, photo, seller_id):
+	def __init__(self, name, description, price, photo):
 		self.name = name
 		self.description = description
 		self.available = True
 		self.price =  price
 		self.photo = photo
-		self.seller_id = seller_id
 	
