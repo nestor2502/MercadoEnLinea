@@ -8,7 +8,7 @@ app = create_app()
 
 @app.route('/')
 def index():
-    return "owo"
+    return render_template("index.html")
 
 @app.route('/uploads/<filename>')
 @login_required
