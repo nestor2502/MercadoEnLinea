@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 
-{% block title %}Agregar Producto{% endblock %}
+{% block title %}Actualizar Producto{% endblock %}
 
 {% block head %}
  {{ super() }}
@@ -67,13 +67,29 @@
             <div id="main-content-bg">
               <div id="main-content">
                 <div class="title text-center">
-                  <h3>Agrega tu producto</h3>
+                  <h3>Actualiza tu producto</h3>
                 </div>
-                <form action="/upload_product" method="POST" enctype="multipart/form-data">
+
+                    {% if id_product %}
+                        <form action="/update_product?id={{ id_product }}" method="POST" enctype="multipart/form-data">
+                    {% endif %}
+
+                    {% if not id_product %}
+                        <form action="/update_product" method="GET" enctype="multipart/form-data">
+                    {% endif %}
+
                   <div class="container">
                     <div class="left">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="nameProduct" placeholder="Nombre del producto" required name="name">
+
+                        {% if name %}
+                            <input type="text" class="form-control" id="nameProduct" value="{{ name }}" required name="name">
+                        {% endif %}
+
+                        {% if not image %}
+                            <input type="text" class="form-control" id="nameProduct" required name="name">
+                        {% endif %}
+
                       </div>
                       <div class="wrapper-form">
                         <div class="left-form">
@@ -82,7 +98,15 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text" id="addon-wrapping">$</span>
                               </div>
-                              <input type="number" class="form-control" id="priceProduct" placeholder="Precio" required name="price">
+
+                        {% if price %}
+                        <input type="number" class="form-control" id="priceProduct" value="{{ price }}" required name="price">
+                        {% endif %}
+
+                        {% if not price %}
+                            <input type="number" class="form-control" id="priceProduct" placeholder="Precio" required name="price">
+                        {% endif %}
+
                             </div>
                           </div>
                         </div>
@@ -90,15 +114,30 @@
                           <div class="form-group">
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" id="customFile" onchange="readURL(this);" required name="image">
-                              <label id="upload" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
+
+                                {% if image %}
+                                <label id="upload" class="custom-file-label text-muted" for="customFile">{{ image }}</label>
+                                {% endif %}
+                                {% if not image %}
+                                    <label id="upload" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
+                                {% endif %}
+ 
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                              placeholder="Descripción" required name="description"></textarea>
-                      </div>
+
+                        {% if description %}
+                            <textarea class="form-control" id="description" rows="3"
+                                placeholder="Descripción" required name="description">{{description}}</textarea>
+                        {% endif %}
+
+                        {% if not description %}
+                            <textarea class="form-control" id="description" rows="3"
+                                placeholder="Descripción" required name="description"></textarea>
+                        {% endif %}
+                                              </div>
                     </div>
                     <div class="right">
                       <div class="image-area">
@@ -112,7 +151,7 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
                   </div>
                 </form>
               </div>
@@ -121,7 +160,6 @@
     </div>
 </body>
 
-{% include "modal.html" %}
 
 {% block scripts %}
  {{ super() }}
