@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+{% endblock %}
+
 {% block content %}
 <body>
 
