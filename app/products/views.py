@@ -19,7 +19,6 @@ def upload_product():
         description = request.form['description']
         image_filepath = request.files['image']
         products_ctrl.upload_product(name, price, description, image_filepath)
-
         return render_template('add-product.html', image = products_ctrl.get_product_image_filename(name))    
         
     return render_template('add-product.html')

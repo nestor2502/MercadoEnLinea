@@ -17,15 +17,14 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header mr-2">
-                    <img src="../static/img/Maanostítulo.png" width="65" height="65" alt="">
-                </div>
+                <img src="../static/img/Maanostítulo.png" width="65" height="65" alt="">
+            </div>
                 {% if current_user.role_id == 1 %}
                   {% include "sidebar-vendedor.html" %}
                 {% endif %}
                 {% if current_user.role_id == 2 %}
                   {% include "sidebar-comprador.html" %} 
                 {% endif %}
-            </div>
         </nav>
 
         <!-- Page Content  -->
@@ -50,9 +49,9 @@
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
                       <span id="user-name">
                        {% if current_user.is_authenticated %}
-                        Hi {{ current_user.name }}
+                        {{current_user.name }}
             
-                      <img src="https://ui-avatars.com/api/?name=Pepe Perez&background=random&size=32&rounded=true">
+                      <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
                         {% endif %} </span>
                     </div>
                 </div>
@@ -68,4 +67,4 @@
     </div>
 </body>
 {% include "modal.html" %}
-  {% endblock %}
+{% endblock %}
