@@ -29,8 +29,10 @@ def upload_product():
 @login_required
 def update_product():
     id_product = request.args.get('id')
+    if not products_ctrl.verifyProduct(id_product):
+        return render_template('404-error.html')
+
     if request.method == 'POST':
-        id_product = request.args.get('id')
         name = request.form['name']
         price = request.form['price']
         description = request.form['description']
@@ -43,7 +45,6 @@ def update_product():
     name = product.name
     price = product.price
     description = product.description
-
     return render_template('update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
 
 

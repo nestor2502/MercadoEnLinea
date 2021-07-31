@@ -41,23 +41,32 @@ def upload_product(name, price, description, image_file):
         return False
 
 def update_product(id_product, name, price, description, image_file):
-    print(id_product)
-    print(name)
-    print(price)
-    print(description)
+    product = Product.query.get(id_product)
+    product.name = name
+    product.price = price
+    product.description = description
+    db.session.commit()
+    print(product.photo)
+
+    if image_file and image_file.filename != "":
+        if allowed_extension(image_file.filename):
+            old_image = os.path.join(current_app.config['UPLOAD_FOLDER'], product.photo)
+
+            secure_filename = get_secure_filename(image_file.filename)
+            product.photo = secure_filename
+            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename)
+            image_file.save(image_path)
+            db.session.commit()
+            #flash("Producto editado exitosamente.","success")
+            if os.path.isfile(old_image):
+                os.remove(old_image)
+
+            return True
+        else:
+            #flash("Extensión incorrecta, extensiones permitidas: png|jpg|jpeg","error")
+            return False
+
+def verifyProduct(id_product):
     if (id_product is None):
-        flash("BAD REQUEST")
         return False
-    if image_file and allowed_extension(image_file.filename):
-        secure_filename = get_secure_filename(image_file.filename)
-        #new_product.photo = secure_filename
-        product = Product.query.get(id_product)
-        product.name = name
-        #image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename)
-        #image_file.save(image_path)
-        db.session.commit()
-        flash("Producto editado exitosamente.","success")
-        return True
-    else:
-        flash("Extensión incorrecta, extensiones permitidas: png|jpg|jpeg","error")
-        return False
+    return True
