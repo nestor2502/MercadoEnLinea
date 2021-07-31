@@ -82,11 +82,11 @@
                       <div class="form-group">
 
                         {% if name %}
-                            <input type="text" class="form-control" id="nameProduct" value="{{ name }}" required name="name">
+                            <input type="text" class="form-control" id="nameProduct" value="{{ name }}" name="name">
                         {% endif %}
 
-                        {% if not image %}
-                            <input type="text" class="form-control" id="nameProduct" required name="name">
+                        {% if not name %}
+                            <input type="text" class="form-control" id="nameProduct" name="name">
                         {% endif %}
 
                       </div>
@@ -99,11 +99,11 @@
                               </div>
 
                         {% if price %}
-                        <input type="number" class="form-control" id="priceProduct" value="{{ price }}" required name="price">
+                        <input type="number" class="form-control" id="priceProduct" value="{{ price }}" name="price">
                         {% endif %}
 
                         {% if not price %}
-                            <input type="number" class="form-control" id="priceProduct" placeholder="Precio" required name="price">
+                            <input type="number" class="form-control" id="priceProduct" placeholder="Precio" name="price">
                         {% endif %}
 
                             </div>
@@ -112,12 +112,12 @@
                         <div class="right-form">
                           <div class="form-group">
                             <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile" value="{{ image }}" onchange="readURL(this);" name="image">
+                                <input type="file" class="custom-file-input" id="customFile" onchange="showImage(event);" name="image">
                                 {% if image %}
-                                    <label id="upload" class="custom-file-label text-muted" for="customFile">{{ image }}</label>
+                                    <label id="labelImage" class="custom-file-label text-muted" for="customFile">{{ image }}</label>
                                 {% endif %}
                                 {% if not image %}
-                                    <label id="upload" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
+                                    <label id="labelImage" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
                                 {% endif %}
  
                             </div>
@@ -128,19 +128,19 @@
 
                         {% if description %}
                             <textarea class="form-control" id="description" rows="3"
-                                placeholder="Descripción" required name="description">{{description}}</textarea>
+                                placeholder="Descripción" name="description">{{description}}</textarea>
                         {% endif %}
 
                         {% if not description %}
                             <textarea class="form-control" id="description" rows="3"
-                                placeholder="Descripción" required name="description"></textarea>
+                                placeholder="Descripción" name="description"></textarea>
                         {% endif %}
                                               </div>
                     </div>
                     <div class="right">
                       <div class="image-area">
                         {% if image %}
-                            <img src="{{ url_for('upload', filename=image) }}" class="img-fluid  mx-auto d-block">
+                            <img id="imageResult" src="{{ url_for('upload', filename=image) }}" class="img-fluid  mx-auto d-block">
                         {% endif %}
                         {% if not image %}
                             <img id="imageResult" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
@@ -149,13 +149,14 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <button id="updateButton" type="submit" class="btn btn-primary">Actualizar</button>
                   </div>
                 </form>
               </div>
             </div>
         </div>
     </div>
+    {% include "modal.html" %}
 </body>
 
 

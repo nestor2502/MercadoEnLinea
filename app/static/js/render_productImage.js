@@ -1,34 +1,23 @@
-/*  ==========================================
-    SHOW UPLOADED IMAGE
-* ========================================== */
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#imageResult')
-                .attr('src', e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
+/* SHOW UPLOADED IMAGE */
+function showImage(event){
+    var image = URL.createObjectURL(event.target.files[0]);
+    var newImg = document.getElementById('imageResult');
+    newImg.src = image;
 }
 
-$(function () {
-    $('#customFile').on('change', function () {
-        readURL(input);
-    });
-});
-
-/*  ==========================================
-    SHOW UPLOADED IMAGE NAME
-* ========================================== */
+/* CHANGE IMAGE LABEL */
 var input = document.getElementById('customFile');
-var infoArea = document.getElementById( 'upload');
+input.addEventListener('change', showFileName);
 
-input.addEventListener( 'change', showFileName );
-
-function showFileName( event ) {
-  var input = event.srcElement;
-  var fileName = input.files[0].name;
-  infoArea.textContent = fileName;
+function showFileName(event) {
+    var input = event.srcElement;
+    var fileName = input.files[0].name;
+    var infoArea = document.getElementById('labelImage');
+    infoArea.textContent = fileName;
 }
+
+/* VERIFY INPUTS 
+var nameInput = document.getElementById("nameProduct")
+var updateButton = document.getElementById("updateButton")
+*/
+

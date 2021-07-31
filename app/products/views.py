@@ -38,7 +38,9 @@ def update_product():
         description = request.form['description']
         image_filepath = request.files['image']
         products_ctrl.update_product(id_product, name, price, description, image_filepath)
-        return "owo"
+        product = products_ctrl.get_product(id_product)
+        # TODO redirect to home
+        return render_template('update-product.html', id_product=id_product, image=product.photo, name=name, price=price, description=description)    
 
     product = products_ctrl.get_product(id_product)
     image = product.photo

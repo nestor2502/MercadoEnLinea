@@ -7,7 +7,6 @@ from app import ALLOWED_EXTENSIONS
 
 import os, string, random
 
-
 def get_product_image_filename(name):
     for product in current_user.products:
         if product.name == name:
@@ -41,12 +40,15 @@ def upload_product(name, price, description, image_file):
         return False
 
 def update_product(id_product, name, price, description, image_file):
+    if name == '' or price == '' or description == '':
+        flash("Campos incompletos, por favor llene todos los campos","error")
+        return False;
+
     product = Product.query.get(id_product)
     product.name = name
     product.price = price
     product.description = description
     db.session.commit()
-    print(product.photo)
 
     if image_file and image_file.filename != "":
         if allowed_extension(image_file.filename):
@@ -57,16 +59,21 @@ def update_product(id_product, name, price, description, image_file):
             image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename)
             image_file.save(image_path)
             db.session.commit()
-            #flash("Producto editado exitosamente.","success")
             if os.path.isfile(old_image):
                 os.remove(old_image)
 
+            flash("Producto editado exitosamente.","success")
             return True
         else:
-            #flash("Extensión incorrecta, extensiones permitidas: png|jpg|jpeg","error")
+            flash("Extensión incorrecta, extensiones permitidas: png|jpg|jpeg","error")
             return False
 
+    flash("Producto editado exitosamente.","success")
+    return True
+
 def verifyProduct(id_product):
-    if (id_product is None):
+    # check if the product exists and belongs to the current user
+    product = get_product(id_product)
+    if (id_product is None or product.user_id != current_user.id):
         return False
     return True
