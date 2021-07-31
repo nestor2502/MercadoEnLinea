@@ -24,6 +24,10 @@ def allowed_extension(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def upload_product(name, price, description, image_file):
+    if name == '' or price == '' or description == '' or image_file.filename == '':
+        flash("Campos incompletos, por favor llene todos los campos","error")
+        return False;
+
     if image_file and allowed_extension(image_file.filename):
         new_product = Product(name, description, price,"")
         secure_filename = get_secure_filename(image_file.filename)
@@ -74,6 +78,8 @@ def update_product(id_product, name, price, description, image_file):
 def verifyProduct(id_product):
     # check if the product exists and belongs to the current user
     product = get_product(id_product)
-    if (id_product is None or product.user_id != current_user.id):
+    if (id_product is None or product is None):
+        return False
+    if product.user_id != current_user.id:
         return False
     return True

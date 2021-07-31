@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 
 
-{% block title %}Actualizar Producto{% endblock %}
+{% block title %}
+    {% if id_product %}
+        Actualizar Producto
+    {% endif %}
+
+    {% if not id_product %}
+        Agregar Producto
+    {% endif %}
+{% endblock %}
 
 {% block head %}
  {{ super() }}
@@ -67,15 +75,22 @@
             <div id="main-content-bg">
               <div id="main-content">
                 <div class="title text-center">
-                  <h3>Actualiza tu producto</h3>
+
+                    {% if id_product %}
+                        <h3>Actualiza tu producto</h3>
+                    {% endif %}
+
+                    {% if not id_product %}
+                        <h3>Agrega tu producto</h3>
+                    {% endif %}
                 </div>
 
                     {% if id_product %}
                         <form action="/update_product?id={{ id_product }}" method="POST" enctype="multipart/form-data">
                     {% endif %}
 
-                    {% if id_product %}
-                        <form action="/update_product" method="GET" enctype="multipart/form-data">
+                    {% if not id_product %}
+                        <form action="/upload_product" method="POST" enctype="multipart/form-data">
                     {% endif %}
                   <div class="container">
                     <div class="left">
@@ -149,7 +164,14 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button id="updateButton" type="submit" class="btn btn-primary">Actualizar</button>
+
+                        {% if id_product %}
+                            <button id="updateButton" type="submit" class="btn btn-primary">Actualizar</button>
+                        {% endif %}
+
+                        {% if not id_product %}
+                            <button id="updateButton" type="submit" class="btn btn-primary">Agregar</button>
+                        {% endif %}
                   </div>
                 </form>
               </div>

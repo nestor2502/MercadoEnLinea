@@ -20,9 +20,8 @@ def upload_product():
         image_filepath = request.files['image']
         products_ctrl.upload_product(name, price, description, image_filepath)
 
-        return render_template('add-product.html', image = products_ctrl.get_product_image_filename(name))    
-        
-    return render_template('add-product.html')
+        return render_template('add-update-product.html', image = products_ctrl.get_product_image_filename(name))    
+    return render_template('add-update-product.html')
 
 
 @products.route('/update_product', methods = ['GET','POST'])
@@ -40,14 +39,14 @@ def update_product():
         products_ctrl.update_product(id_product, name, price, description, image_filepath)
         product = products_ctrl.get_product(id_product)
         # TODO redirect to home
-        return render_template('update-product.html', id_product=id_product, image=product.photo, name=name, price=price, description=description)    
+        return render_template('add-update-product.html', id_product=id_product, image=product.photo, name=name, price=price, description=description)    
 
     product = products_ctrl.get_product(id_product)
     image = product.photo
     name = product.name
     price = product.price
     description = product.description
-    return render_template('update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
+    return render_template('add-update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
 
 
 
