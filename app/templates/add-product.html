@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Agregar Producto{% endblock %}
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+  <link rel="stylesheet" href="../static/css/add-edit-product.css">
+{% endblock %}
+{% block content %}
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header mr-2">
+                <img src="../static/img/Maanostítulo.png" width="60" height="60">
+            </div>
+            {% include "sidebar-vendedor.html" %}
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid" id="topbar">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info position-relative">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <form class="form-inline position-relative my-2">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" style="border-radius: 40px; width: 100%;">
+                      <button class="btn btn-search position-absolute" type="submit" style="border-radius: 40px;"><i class="fas fa-search" style="color: lightgrey;"></i>
+                      </button>
+                    </form>
+
+                    <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
+                      <span id="user-name">
+                       {% if current_user.is_authenticated %}
+                        {{current_user.name }}
+            
+                      <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
+                        {% endif %} </span>
+                    </div>
+                </div>
+            </nav>
+            <div id="main-content-bg">
+              <div id="main-content">
+                <div class="title text-center">
+                  <h3>Agrega tu producto</h3>
+                </div>
+                <form action="/upload_product" method="POST" enctype="multipart/form-data">
+                  <div class="container">
+                    <div class="left">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nombre del producto" required name="name">
+                      </div>
+                      <div class="wrapper-form">
+                        <div class="left-form">
+                          <div class="form-group">
+                            <div class="input-group flex-nowrap">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">$</span>
+                              </div>
+                              <input type="number" class="form-control" id="price-product" placeholder="Precio" required name="price">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="right-form">
+                          <div class="form-group">
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" onchange="readURL(this);" id="customFile" required name="image" accept="image/*" >
+                              <label id="upload" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción" required name="description"></textarea>
+                      </div>
+                    </div>
+                    <div class="right">
+                      <div class="image-area">
+                          <img id="imageResult" src="../static/img/image-regular.svg" class="img-fluid">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <a class="btn btn-primary lead" href="{{url_for('products.home')}}">Cancelar</a>
+                    <button type="submit" class="btn btn-primary lead">Agregar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/js/add-edit-product.js"></script>
+</body>
+{% include "modal.html" %}
+{% endblock %}

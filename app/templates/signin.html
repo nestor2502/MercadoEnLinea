@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}SignIn{% endblock %}
+
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/util.css">
+  <link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
+{% endblock %}
+
+
+{% block content %}
+
+<body class="container" style="background-image: url('../static/img/centro-2.jpg'); background-size: cover;">
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-signIn p-t-50 p-b-90">
+        <form class="login100-form validate-form flex-sb flex-w" style="justify-content: center;display: flex;"
+          action="/user/signin" method="POST">
+
+          <span class="login100-form-title p-b-51">
+            Crear nueva cuenta
+          </span>
+          <!--Primer conjunto de inputs-->
+          <div class="wrap-form">
+            <div class="wrap-input100 m-b-16 m-r-10">
+              <i class="fas fa-user" style="padding: 23px; min-width: 40px; position: absolute;"></i>
+              <input class="input100" type="text" name="name" placeholder="Nombre de usuario" required name="name">
+
+              <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 m-b-16 m-l-10">
+              <i class="fas fa-at" style="padding: 23px; min-width: 40px; position: absolute;"></i>
+              <input class="input100" type="text" name="email" placeholder="Email" required name="email">
+
+              <span class="focus-input100"></span>
+            </div>
+
+          </div>
+          <!--Segundo conjunto de inputs-->
+          <div class="wrap-form">
+            <div class="wrap-input100 m-b-16 m-r-10" data-validate="Password is required">
+              <i class="fas fa-phone" style="padding: 23px; min-width: 40px; position: absolute;"></i>
+              <input class="input100" type="number" name="phone" placeholder="Teléfono" required name="phone">
+              <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 m-b-16 m-l-10" >
+
+              <div>
+                <i class="fas fa-user-tag" style="padding: 23px; min-width: 40px; position: absolute;"></i>
+
+                <select class="input200 select-class" name="role" style="width: 100%; text-align:center">
+                  <option value="Vendedor">Vendedor</option>
+                  <option value="Comprador">Comprador</option>
+                </select>
+   
+              </div>
+
+          </div>
+          </div>
+          <div class="container-login100-form-btn m-t-50">
+            <button class="login100-form-btn" type="submit" type="button">
+              Crear cuenta
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  {% include "modal.html" %}
+
+
+
+  
+
+</body>
+
+
+{% endblock %}
