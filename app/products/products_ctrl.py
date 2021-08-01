@@ -34,10 +34,14 @@ def allowed_extension(filename):
 
 def upload_product(name, price, description, image_file):
     if name == '' or price == '' or description == '' or image_file.filename == '':
-        flash("Campos incompletos, por favor llene todos los campos","error")
+        flash("Campos incompletos, por favor llene todos los campos.","error")
         return False;
 
     if image_file and allowed_extension(image_file.filename):
+        for product in current_user.products:
+            if product.name == name:
+                flash("Producto ya existente.","error")
+                return False
         new_product = Product(name, description, price,"")
         secure_filename = get_secure_filename(image_file.filename)
         new_product.photo = secure_filename
