@@ -2,7 +2,7 @@
     DEMO STYLE
 */
 
-@import "https://fonts.googleapis.com/css2?family=Mulish:300,400,500,600,700";
+@import url('https://fonts.googleapis.com/css2?family=Mulish&family=Poppins:wght@300&display=swap');
 :root {
     --primary: #FFE600;
     --light: #2D3277;

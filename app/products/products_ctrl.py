@@ -17,6 +17,15 @@ def get_product(id_product):
     product = Product.query.get(id_product)
     return product
 
+def verify_product(id_product):
+    # check if the product exists and belongs to the current user
+    product = get_product(id_product)
+    if (id_product is None or product is None):
+        return False
+    if product.user_id != current_user.id:
+        return False
+    return True
+
 def get_secure_filename(filename):
     return f"{''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))}.{filename.rsplit('.', 1)[1].lower()}"
 
@@ -73,13 +82,4 @@ def update_product(id_product, name, price, description, image_file):
             return False
 
     flash("Producto editado exitosamente.","success")
-    return True
-
-def verifyProduct(id_product):
-    # check if the product exists and belongs to the current user
-    product = get_product(id_product)
-    if (id_product is None or product is None):
-        return False
-    if product.user_id != current_user.id:
-        return False
     return True

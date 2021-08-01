@@ -18,17 +18,18 @@ def upload_product():
         price = request.form['price']
         description = request.form['description']
         image_filepath = request.files['image']
-        products_ctrl.upload_product(name, price, description, image_filepath)
 
-        return render_template('add-update-product.html', image = products_ctrl.get_product_image_filename(name))    
+        if products_ctrl.upload_product(name, price, description, image_filepath):
+            return redirect(url_for('products.home'))
     return render_template('add-update-product.html')
+
 
 
 @products.route('/update_product', methods = ['GET','POST'])
 @login_required
 def update_product():
     id_product = request.args.get('id')
-    if not products_ctrl.verifyProduct(id_product):
+    if not products_ctrl.verify_product(id_product):
         return render_template('404-error.html')
 
     if request.method == 'POST':
@@ -36,10 +37,9 @@ def update_product():
         price = request.form['price']
         description = request.form['description']
         image_filepath = request.files['image']
-        products_ctrl.update_product(id_product, name, price, description, image_filepath)
-        product = products_ctrl.get_product(id_product)
-        # TODO redirect to home
-        return render_template('add-update-product.html', id_product=id_product, image=product.photo, name=name, price=price, description=description)    
+
+        if products_ctrl.update_product(id_product, name, price, description, image_filepath):
+            return redirect(url_for('products.home'))
 
     product = products_ctrl.get_product(id_product)
     image = product.photo
@@ -47,8 +47,3 @@ def update_product():
     price = product.price
     description = product.description
     return render_template('add-update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
-
-
-
-
-
