@@ -67,8 +67,13 @@
                     </form>
 
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
-                      <span id="user-name">Juan García Lugo </span>
-                      <img src="https://ui-avatars.com/api/?name=Juan+García+Lugo&background=random&size=32&rounded=true">
+
+                      <span id="user-name">
+                       {% if current_user.is_authenticated %}
+                        Hola {{ current_user.name }} !
+                        <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&background=random&size=32&rounded=true">
+                        {% endif %}
+                      </span>
                     </div>
                 </div>
             </nav>
@@ -166,12 +171,13 @@
                   <div class="text-center">
 
                         {% if id_product %}
-                            <button id="updateButton" type="submit" class="btn btn-primary">Actualizar</button>
+                            <button id="updateButton" type="submit" class="btn btn-success">Actualizar</button>
                         {% endif %}
 
                         {% if not id_product %}
-                            <button id="updateButton" type="submit" class="btn btn-primary">Agregar</button>
+                            <button id="uploadButton" type="submit" class="btn btn-success">Agregar</button>
                         {% endif %}
+                        <a class="btn btn-danger" href="{{url_for('products.home')}}">Cancelar</a>
                   </div>
                 </form>
               </div>
