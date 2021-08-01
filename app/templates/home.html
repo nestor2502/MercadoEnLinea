@@ -49,8 +49,7 @@
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
                       <span id="user-name">
                        {% if current_user.is_authenticated %}
-                        {{current_user.name }}
-            
+                        Hola {{current_user.name }} !
                       <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
                         {% endif %} </span>
                     </div>
