@@ -1,6 +1,6 @@
 from app.models import *
 from flask import jsonify, flash, session
-from flask_login.utils import login_user, logout_user
+from flask_login.utils import login_user, logout_user, current_user
 from app.models import db
 
 import re, secrets, string, pathlib
@@ -211,3 +211,6 @@ def logout():
         del session['was_once_logged_in']
     flash('Cerraste sesión exitosamente', 'success')
     return True
+
+def get_user_role():
+    return Role.query.filter_by(id = current_user.role_id).first().name

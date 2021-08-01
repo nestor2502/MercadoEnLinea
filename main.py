@@ -8,6 +8,8 @@ app = create_app()
 
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('products.home'))
     return render_template("index.html")
 
 @app.route('/uploads/<filename>')
