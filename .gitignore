@@ -5,4 +5,4 @@ app/__pycache__/
 app/user/__pycache__/
 app/products/__pycache__/
 test.py
-/uploaded_images
+uploaded_images/
