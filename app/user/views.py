@@ -7,7 +7,8 @@ from app.user import user_ctrl
 
 @user.route('/signin', methods = ['POST', 'GET'])
 def signin():
-
+    if current_user.is_authenticated:
+        return redirect(url_for('products.home'))
     if request.method == 'POST':
         email = request.form['email']
         name = request.form['name']
