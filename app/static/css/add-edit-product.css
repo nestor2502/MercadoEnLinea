@@ -24,6 +24,64 @@ form .container{
     padding: 20px;
     width: 50%;
 }
+
+.left-form {
+    padding-right: 5px;
+    width: 50%;
+}
+
+.right-form {
+    padding-left: 5px;
+    width: 50%;
+}
+
+textarea {
+    resize: none;
+}
+
+.input-group-prepend span{
+    background: transparent;
+    border-right: none;
+}
+
+#price-product {
+    border-left: none;
+}
+
+.col img{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 0%;
+}
+
+@media (max-width:540px) {
+    form .container {
+        display: block;
+    }
+    .left {
+        width: 100%;
+    }
+
+    .right {
+        width: 100%;
+    }
+}
+
+@media (max-width:604px) {
+    .wrapper-form {
+        display: block;
+    }
+    .left-form {
+        padding: 0px;
+        width: 100%;
+    }
+
+    .right-form {
+        padding: 0px;
+        width: 100%;
+    }
+}
 .left-form {
     padding-right: 5px;
     width: 50%;
