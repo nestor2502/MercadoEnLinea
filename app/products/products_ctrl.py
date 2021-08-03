@@ -90,3 +90,6 @@ def update_product(id_product, name, price, description, image_file):
 
 def get_top_products():
     return Product.query.all()
+
+def get_my_products():
+    return Product.query.filter((Product.user_id == current_user.id))

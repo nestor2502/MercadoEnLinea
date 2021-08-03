@@ -21,3 +21,8 @@ thead{
 .td-center{
   text-align: center;
 }
+
+.table-header{
+  display: flex;
+  justify-content: space-between;
+}

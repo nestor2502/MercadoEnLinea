@@ -9,6 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../static/css/template.css">
     {% if role == 'Comprador' %}
         <link rel="stylesheet" type="text/css" href="../static/css/home-buyer.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
+    {% endif %}
+    {% if role == 'Vendedor' %}
+        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
     {% endif %}
 {% endblock %}
 
@@ -61,7 +65,7 @@
             <div id="main-content-bg">
                 <div id="main-content">
                     {% if  role == 'Vendedor' %}
-                        <p>Contenido de home seller</p>
+                         {% include "homeSeller.html" %}
                     {% endif %}
                     {% if  role == 'Comprador' %}
                         {% include "home-buyer.html" %}
