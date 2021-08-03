@@ -90,3 +90,17 @@ def update_product(id_product, name, price, description, image_file):
 
 def get_top_products():
     return Product.query.all()
+
+def get_my_products():
+    return Product.query.filter((Product.user_id == current_user.id))
+
+def delete_product(id_product):
+    try:
+        Product.query.filter_by(id=id_product).delete()
+        db.session.commit()
+        flash("Producto eliminado exitosamente.","success")
+        return True
+    except Exception as e:
+        print(e)
+        flash('Ocurrió un error al intentar eliminar el producto, intente más tarde.','error')
+        return False

@@ -1,0 +1,56 @@
+
+<div>
+
+  <div class= "table-header">
+    <h5 class="title-view">
+    Mis Productos
+  </h5>
+  <a class="btn btn-outline-success" 
+     href="{{ url_for('products.upload_product') }}" 
+     style="max-height: 2.3rem;">
+      Agregar producto &nbsp;  
+      <i class="fas fa-plus"></i></a>
+  </div>
+
+
+<div class="table-wrapper">
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre del Producto</th>
+        <!--th scope="col" class="td-center">Número de ventas</th-->
+        <th scope="col" class="td-center">Disponible</th>
+        <th scope="col">Precio</th>
+        <th scope="col" class="td-center">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <th scope="row">{{product.name}}</th>
+        <td class="td-center">
+          {% if product.available%}
+          <i class="fas fa-check"></i>
+          {% endif %}
+          {% if not product.available%}
+          <i class="fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>$ &nbsp;{{product.price}}</td>
+        <!--td  class="td-center"><i class="fas fa-ellipsis-h"></i></td-->
+        <td  class="td-center">
+          <div class="dropdown open">
+            <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="{{ url_for('products.update_product', id_product = product.id ) }}">Editar</a>
+                <a class="dropdown-item" href="{{ url_for('products.delete_product', id_product = product.id ) }}">Eliminar</a>
+              </div>
+          </div>
+        </td>
+      </tr>
+       {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+</div>
