@@ -58,3 +58,12 @@ def update_product(id_product):
     price = product.price
     description = product.description
     return render_template('add-update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
+
+@products.route('/delete_product/<id_product>', methods = ['GET'])
+@login_required
+def delete_product(id_product):
+    products_ctrl.delete_product(id_product)
+    return redirect(url_for('products.home'))   
+    
+
+
