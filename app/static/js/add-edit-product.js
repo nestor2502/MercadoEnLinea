@@ -1,39 +1,30 @@
-/*  ==========================================
-    SHOW UPLOADED IMAGE
-* ========================================== */
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onerror = function(event) {
-            alert("Archivo no compatible\n");
-            reader.abort(); // (...does this do anything useful in an onerror handler?)
-            return;
-        };
-        reader.onload = function (e) {
-            $('#imageResult')
-                .attr('src', e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
+/* SHOW UPLOADED IMAGE */
+function showImage(event){
+    var image = URL.createObjectURL(event.target.files[0]);
+    var newImg = document.getElementById('imageResult');
+    newImg.src = image;
+}
+
+/* CHANGE IMAGE LABEL */
+var input = document.getElementById('customFile');
+input.addEventListener('change', showFileName);
+
+function showFileName(event) {
+    var input = event.srcElement;
+    var fileName = input.files[0].name;
+    var infoArea = document.getElementById('labelImage');
+    infoArea.textContent = fileName;
+}
+
+/* AVAILABLE CHECKBOX TEXT */
+var checkbox = document.getElementById('check-available');
+checkbox.addEventListener('click', showAvailable);
+
+function showAvailable() {
+    if ($("#check-available").is(":checked")) {
+        $("#text-available").text("DISPONIBLE");
+    } else {
+        $("#text-available").text("NO DISPONIBLE");
     }
 }
 
-(function () {
-    $('#customFile').on('change', function () {
-        readURL(input);
-        
-    });
-});
-/*  ==========================================
-    SHOW UPLOADED IMAGE NAME
-* ========================================== */
-
-var input = document.getElementById('customFile');
-var infoArea = document.getElementById('upload');
-
-input.addEventListener('change', showFileName );
-
-function showFileName( event ) {
-  var input = event.srcElement;
-  var fileName = input.files[0].name;
-  infoArea.textContent = fileName;
-}
