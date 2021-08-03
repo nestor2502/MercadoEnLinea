@@ -43,9 +43,31 @@
             <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <a class="dropdown-item" href="{{ url_for('products.update_product', id_product = product.id ) }}">Editar</a>
-                <a class="dropdown-item" href="{{ url_for('products.delete_product', id_product = product.id ) }}">Eliminar</a>
+                <!--a class="dropdown-item" href="{{ url_for('products.delete_product', id_product = product.id ) }}">Eliminar</a-->
+                <a class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Eliminar</a>
+
               </div>
           </div>
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                <img src="../static/img/warning.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
+                <br>
+                <br>
+                  ¿Estás Seguro de elimininar este producto?
+                  <br>
+                  Esta acción no es reversible
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <a class="btn btn-danger" href="{{ url_for('products.delete_product', id_product = product.id ) }}">Eliminar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--End Modal-->
         </td>
       </tr>
        {% endfor %}

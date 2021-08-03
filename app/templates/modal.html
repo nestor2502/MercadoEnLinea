@@ -8,18 +8,17 @@
         {% for category, message in messages %}
         {% if category == "error" %}
         <img src="../static/img/error.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
-        {% endif %}
-        <br>        
+        {% endif %}   
         {% if category == "success" %}
-        <img src="../static/img/success.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
+        <img src="../static/img/succes-2.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
         {% endif %}
         {% if not category %}
         <img src="../static/img/error.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
         {% endif %}
         <br>
         <br>
-        <br>
          <p  class="modal-title p-b-51"> {{ message }}</p>
+         <br>
         {% endfor %}
       <div class="modal-footer" style="justify-content: center;">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Aceptar</button>
