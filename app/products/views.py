@@ -39,17 +39,17 @@ def upload_product():
 def update_product(id_product):
     if user_ctrl.get_user_role() != "Vendedor":
         return render_template('404-error.html')
-    id_product = id_product #request.args.get('id')
     if not products_ctrl.verify_product(id_product):
         return render_template('404-error.html')
-    
+
     if request.method == 'POST':
         name = request.form['name']
         price = request.form['price']
         description = request.form['description']
+        available = request.form.get('available')
         image_filepath = request.files['image']
 
-        if products_ctrl.update_product(id_product, name, price, description, image_filepath):
+        if products_ctrl.update_product(id_product, name, price, description, available, image_filepath):
             return redirect(url_for('products.home'))
 
     product = products_ctrl.get_product(id_product)
@@ -57,7 +57,10 @@ def update_product(id_product):
     name = product.name
     price = product.price
     description = product.description
-    return render_template('add-update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
+    available = "on" if product.available else "off"
+
+    return render_template('add-update-product.html', id_product=id_product,
+            image=image, name=name, price=price, description=description, available=available)
 
 @products.route('/delete_product/<id_product>', methods = ['GET'])
 @login_required

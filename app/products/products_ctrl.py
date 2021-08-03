@@ -56,7 +56,7 @@ def upload_product(name, price, description, image_file):
         flash("Extensión incorrecta, extensiones permitidas: png|jpg|jpeg","error")
         return False
 
-def update_product(id_product, name, price, description, image_file):
+def update_product(id_product, name, price, description, available, image_file):
     if name == '' or price == '' or description == '':
         flash("Campos incompletos, por favor llene todos los campos","error")
         return False;
@@ -65,6 +65,7 @@ def update_product(id_product, name, price, description, image_file):
     product.name = name
     product.price = price
     product.description = description
+    product.available = True if available == "on" else False
     db.session.commit()
 
     if image_file and image_file.filename != "":
