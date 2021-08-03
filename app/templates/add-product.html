@@ -1,34 +1,19 @@
 {% extends "base.html" %}
-
-
 {% block title %}Agregar Producto{% endblock %}
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+  <link rel="stylesheet" href="../static/css/add-edit-product.css">
+{% endblock %}
 {% block content %}
-
+<body>
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header mr-2">
-                    <img src="../static/img/Maanostítulo.png" width="60" height="60" alt="">
-                </div>
-
-                <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#" class="d-block p-3"><i class='fas fa-chart-pie mr-2 lead'></i></i>Mis productos</a>
-                    </li>
-                    <li>
-                        <a href="#" class="d-block p-3 "><i class='fas fa-user-circle mr-2 lead'></i></i>Perfil</a>
-                    </li>
-                    <li id="logout_sidebar_button">
-                        <a href="#" class="d-block p-3 "><i class='fas fa-sign-out-alt mr-2 lead'></i></i>cerrar sesión</a>
-                    </li>
-                    
-                </ul>
-                <!--<ul id="logout_sidebar_button" class="nav nav-sidebar">
-                    <li>
-                        <a href="#" class="d-block p-3 "><i class='fas fa-sign-out-alt mr-2 lead'></i></i>cerrar sesión</a>
-                    </li>
-                </ul>-->
+                <img src="../static/img/Maanostítulo.png" width="60" height="60">
             </div>
+            {% include "sidebar-vendedor.html" %}
         </nav>
 
         <!-- Page Content  -->
@@ -40,7 +25,6 @@
                         <span></span>
                         <span></span>
                         <span></span>
-                        <!--<i class="fas fa-align-left"></i>-->
                     </button>
 
                     <form class="form-inline position-relative my-2">
@@ -50,71 +34,66 @@
                     </form>
 
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
-                      <span id="user-name">{{current_user.name}} </span>
+                      <span id="user-name">
+                       {% if current_user.is_authenticated %}
+                        {{current_user.name }}
+            
                       <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
+                        {% endif %} </span>
                     </div>
                 </div>
             </nav>
             <div id="main-content-bg">
-                <div id="main-content">
-                    <form action="/upload_product" method="POST" enctype="multipart/form-data">
-                        <div class="form-group mt-5 col-md-12">
-                            <label>Nombre del producto</label>
-                            <input type="text" class="form-control" id="product-name"
-                            placeholder="Nombre de producto" required name="name">
-                        </div>
-
-                        <div class="mb-5 mt-5 position-relative"> <!-- Div price-img -->
-                            <div class="input-group mb-5 col-md-6 float-left">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">$</span>
-                                </div>
-                                <input type="number" class="form-control" id="price" placeholder="Precio" required name="price">
-                            </div>
-
-                            <!-- Upload image input-->
-                            <div class="input-group mb-5 ml-3 col-md-6 float-left px-2 py-2 rounded-pill bg-white shadow-sm">
-                                <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" required name="image" accept="image/*" >
-                                <label id="upload-label" for="upload" class="font-weight-light text-muted">Imagen del producto</label>
-                                <div class="input-group-append">
-                                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
-                                    <i class="fa fa-cloud-upload mr-2 text-muted"></i>
-                                    <small class="text-uppercase font-weight-bold text-muted">Subir imagen</small>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Uploaded image area-->
-                            
-                            <div class="image-area mt-4">
-                                {% if image%}
-                                    <img src="{{ url_for('upload', filename=image) }}" class="img-fluid  mx-auto d-block">
-                                {% endif %}
-                                {% if not image%}
-                                    <img id="imageResult" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
-                                {% endif %}
-                            </div>
-
-                            <!--
-                            <div class="col-md-6 product-img position-absolute text-center">
-                                <img src="assets/img/nike.jpeg" class="img-fluid rounded-circle avatar">
-                            </div>
-                            -->
-                        </div> <!-- end div price-img -->
-
-                        <div class="input-group-lg mb-5 my-20 col-md-12">
-                            <textarea id="productDescription" rows=5 class="form-control" placeholder="Descripción del producto" required name="description"></textarea>
-                        </div>
-
-                        <div class="text-center">
-                            <label>Descripción</label>
-                            <button type="submit" class="btn btn-success mb-5">Actualizar</button>
-                        </div>
-                    </form>
-
+              <div id="main-content">
+                <div class="title text-center">
+                  <h3>Agrega tu producto</h3>
                 </div>
+                <form action="/upload_product" method="POST" enctype="multipart/form-data">
+                  <div class="container">
+                    <div class="left">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nombre del producto" required name="name">
+                      </div>
+                      <div class="wrapper-form">
+                        <div class="left-form">
+                          <div class="form-group">
+                            <div class="input-group flex-nowrap">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">$</span>
+                              </div>
+                              <input type="number" class="form-control" id="price-product" placeholder="Precio" required name="price">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="right-form">
+                          <div class="form-group">
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" onchange="readURL(this);" id="customFile" required name="image" accept="image/*" >
+                              <label id="upload" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción" required name="description"></textarea>
+                      </div>
+                    </div>
+                    <div class="right">
+                      <div class="image-area">
+                          <img id="imageResult" src="../static/img/image-regular.svg" class="img-fluid">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <a class="btn btn-primary lead" href="{{url_for('products.home')}}">Cancelar</a>
+                    <button type="submit" class="btn btn-primary lead">Agregar</button>
+                  </div>
+                </form>
+              </div>
             </div>
         </div>
     </div>
-    {% include "modal.html" %}
+    <script src="../static/js/add-edit-product.js"></script>
+</body>
+{% include "modal.html" %}
 {% endblock %}

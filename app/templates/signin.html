@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}SignIn{% endblock %}
+
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/util.css">
+  <link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
+{% endblock %}
+
+
 {% block content %}
 
-<body class="container" style="background-image: url('../static/img/store.jpg'); background-size: cover;">
+<body class="container" style="background-image: url('../static/img/centro-2.jpg'); background-size: cover;">
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-signIn p-t-50 p-b-90">

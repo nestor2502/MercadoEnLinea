@@ -1,6 +1,6 @@
 from app.models import *
-from flask import jsonify,flash
-from flask_login.utils import login_user, logout_user
+from flask import jsonify, flash, session
+from flask_login.utils import login_user, logout_user, current_user
 from app.models import db
 
 import re, secrets, string, pathlib
@@ -157,7 +157,7 @@ def signin(email, name, phone, role):
         db.session.add(registered_role)
         db.session.add(new_user)
         db.session.commit()
-        flash(f"Usuario registrado exitosamente, tu contraseña llegará al correo: {email}.",'error')
+        flash(f"Usuario registrado exitosamente, tu contraseña llegará al correo: {email}.",'success')
     else:
         new_role = Role(role)
         db.session.add(new_role)
@@ -206,3 +206,11 @@ def login(email, password):
 
 def logout():
     logout_user()
+    if session.get('was_once_logged_in'):
+        # prevent flashing automatically logged out message
+        del session['was_once_logged_in']
+    flash('Cerraste sesión exitosamente', 'success')
+    return True
+
+def get_user_role():
+    return Role.query.filter_by(id = current_user.role_id).first().name

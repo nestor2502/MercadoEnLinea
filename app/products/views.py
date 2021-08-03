@@ -3,26 +3,56 @@ from flask_login import current_user, login_required
 
 from . import products
 from app.products import products_ctrl
+from app.user import user_ctrl
 
 @products.route('/home', methods = ['GET'])
 @login_required
 def home():
-    return render_template('home.html') 
+    role = user_ctrl.get_user_role()
+    if role == 'Comprador': 
+        products = products_ctrl.get_top_products()
+        return render_template('home.html', products = products, role = role)
+    return render_template('home.html', role = role) 
 
 
 @products.route('/upload_product', methods = ['GET','POST'])
 @login_required
 def upload_product():
+    if user_ctrl.get_user_role() != "Vendedor":
+        return render_template('404-error.html')
     if request.method == 'POST':
         name = request.form['name']
         price = request.form['price']
         description = request.form['description']
         image_filepath = request.files['image']
-        products_ctrl.upload_product(name, price, description, image_filepath)
 
-        return render_template('add-product.html', image = products_ctrl.get_product_image_filename(name))    
-        
-    return render_template('add-product.html')
+        if products_ctrl.upload_product(name, price, description, image_filepath):
+            return redirect(url_for('products.home'))
+    return render_template('add-update-product.html')
 
 
-    
+
+@products.route('/update_product', methods = ['GET','POST'])
+@login_required
+def update_product():
+    if user_ctrl.get_user_role() != "Vendedor":
+        return render_template('404-error.html')
+    id_product = request.args.get('id')
+    if not products_ctrl.verify_product(id_product):
+        return render_template('404-error.html')
+
+    if request.method == 'POST':
+        name = request.form['name']
+        price = request.form['price']
+        description = request.form['description']
+        image_filepath = request.files['image']
+
+        if products_ctrl.update_product(id_product, name, price, description, image_filepath):
+            return redirect(url_for('products.home'))
+
+    product = products_ctrl.get_product(id_product)
+    image = product.photo
+    name = product.name
+    price = product.price
+    description = product.description
+    return render_template('add-update-product.html', id_product=id_product, image=image, name=name, price=price, description=description)    
