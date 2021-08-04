@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 
-{% block title %}Vendedor{% endblock %}
+{% block title %}Home{% endblock %}
 
 
 {% block head %}
- {{ super() }}
-  <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+    {% if role == 'Comprador' %}
+        <link rel="stylesheet" type="text/css" href="../static/css/home-buyer.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
+    {% endif %}
+    {% if role == 'Vendedor' %}
+        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -19,10 +26,10 @@
             <div class="sidebar-header mr-2">
                 <img src="../static/img/Maanostítulo.png" width="65" height="65" alt="">
             </div>
-                {% if current_user.role_id == 1 %}
+                {% if role == 'Vendedor' %}
                   {% include "sidebar-vendedor.html" %}
                 {% endif %}
-                {% if current_user.role_id == 2 %}
+                {% if role == 'Comprador' %}
                   {% include "sidebar-comprador.html" %} 
                 {% endif %}
         </nav>
@@ -38,7 +45,7 @@
                         <span></span>
                         <!--<i class="fas fa-align-left"></i>-->
                     </button>
-                    {% if current_user.role_id == 2 %}
+                    {% if role == 'Comprador' %}
                     <form class="form-inline position-relative my-2">
                       <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" style="border-radius: 40px; width: 100%;">
                       <button class="btn btn-search position-absolute" type="submit" style="border-radius: 40px;"><i class="fas fa-search" style="color: lightgrey;"></i>
@@ -49,8 +56,7 @@
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
                       <span id="user-name">
                        {% if current_user.is_authenticated %}
-                        {{current_user.name }}
-            
+                        Hola {{current_user.name }} !
                       <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
                         {% endif %} </span>
                     </div>
@@ -58,9 +64,12 @@
             </nav>
             <div id="main-content-bg">
                 <div id="main-content">
-
-                  <p>Main content works!</p>                        
-
+                    {% if  role == 'Vendedor' %}
+                         {% include "homeSeller.html" %}
+                    {% endif %}
+                    {% if  role == 'Comprador' %}
+                        {% include "home-buyer.html" %}
+                    {% endif %}
                 </div>
             </div>
         </div>

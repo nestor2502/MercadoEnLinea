@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    {% if id_product %}
+        Actualizar Producto
+    {% endif %}
+
+    {% if not id_product %}
+        Agregar Producto
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/add-edit-product.css">
+{% endblock %}
+
+
+{% block content %}
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header mr-2">
+                <img src="../static/img/Maanostítulo.png" width="60" height="60">
+            </div>
+            {% include "sidebar-vendedor.html" %}
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid" id="topbar">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info position-relative">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <!--<i class="fas fa-align-left"></i>-->
+                    </button>
+
+                    <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
+
+                      <span id="user-name">
+                       {% if current_user.is_authenticated %}
+                        Hola {{ current_user.name }} !
+                        <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&background=random&size=32&rounded=true">
+                        {% endif %}
+                      </span>
+                    </div>
+                </div>
+            </nav>
+            <div id="main-content-bg">
+              <div id="main-content">
+                <div class="title text-center">
+
+                    {% if id_product %}
+                        <h3>Actualiza tu producto</h3>
+                    {% endif %}
+
+                    {% if not id_product %}
+                        <h3>Agrega tu producto</h3>
+                    {% endif %}
+                </div>
+
+                    {% if id_product %}
+                        <form action="/update_product/{{ id_product }}" method="POST" enctype="multipart/form-data">
+                    {% endif %}
+
+                    {% if not id_product %}
+                        <form action="/upload_product" method="POST" enctype="multipart/form-data">
+                    {% endif %}
+                  <div class="container">
+                    <div class="left">
+                      <div class="form-group">
+
+                        {% if name %}
+                            <input type="text" class="form-control" id="nameProduct" value="{{ name }}" name="name" placeholder="Nombre del producto">
+                        {% endif %}
+
+                        {% if not name %}
+                            <input type="text" class="form-control" id="nameProduct" name="name" placeholder="Nombre del producto">
+                        {% endif %}
+
+                      </div>
+                      <div class="wrapper-form">
+                        <div class="left-form">
+                          <div class="form-group">
+                            <div class="input-group flex-nowrap">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">$</span>
+                              </div>
+
+                        {% if price %}
+                        <input type="number" class="form-control" id="priceProduct" value="{{ price }}" name="price">
+                        {% endif %}
+
+                        {% if not price %}
+                            <input type="number" class="form-control" id="priceProduct" placeholder="Precio" name="price">
+                        {% endif %}
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="right-form">
+                          <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" onchange="showImage(event);" name="image">
+                                {% if image %}
+                                    <label id="labelImage" class="custom-file-label text-muted" for="customFile">{{ image }}</label>
+                                {% endif %}
+                                {% if not image %}
+                                    <label id="labelImage" class="custom-file-label text-muted" for="customFile">Imagen del producto </label>
+                                {% endif %}
+ 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                        <div class="form-group">
+
+                        {% if description %}
+                            <textarea class="form-control" id="description" rows="3"
+                                placeholder="Descripción" name="description">{{description}}</textarea>
+                        {% endif %}
+
+                        {% if not description %}
+                            <textarea class="form-control" id="description" rows="3"
+                                placeholder="Descripción" name="description"></textarea>
+                        {% endif %}
+                        </div>
+
+                        {% if available == 'on' %}
+                            <div class="text-center">
+                                <label class="switch">
+                                    <input type="checkbox" id="check-available" name="available" checked>
+                                  <span class="slider round"></span>
+                                </label>
+                                <div id="text-available">DISPONIBLE</div>
+                            </div>
+                        {% endif %}
+
+                        {% if available == 'off' %}
+                            <div class="text-center">
+                                <label class="switch">
+                                    <input type="checkbox" id="check-available" name="available">
+                                  <span class="slider round"></span>
+                                </label>
+                                <div id="text-available">NO DISPONIBLE</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="right">
+                      <div class="image-area">
+                        {% if image %}
+                            <img id="imageResult" src="{{ url_for('upload', filename=image) }}" class="img-fluid  mx-auto d-block">
+                        {% endif %}
+                        {% if not image %}
+                            <img id="imageResult" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+
+                        {% if id_product %}
+                            <button id="updateButton" type="submit" class="btn btn-success">Actualizar</button>
+                        {% endif %}
+
+                        {% if not id_product %}
+                            <button id="uploadButton" type="submit" class="btn btn-success">Agregar</button>
+                        {% endif %}
+                        <a class="btn btn-danger" href="{{url_for('products.home')}}">Cancelar</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+    {% include "modal.html" %}
+</body>
+
+
+{% block scripts %}
+ <script src = "../static/js/add-edit-product.js"></script>
+{% endblock %}
+
+{% endblock %}
