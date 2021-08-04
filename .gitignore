@@ -6,3 +6,4 @@ app/user/__pycache__/
 app/products/__pycache__/
 test.py
 uploaded_images/
+.DS_Store

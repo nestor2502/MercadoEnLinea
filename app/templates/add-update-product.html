@@ -66,7 +66,7 @@
                 </div>
 
                     {% if id_product %}
-                        <form action="/update_product?id={{ id_product }}" method="POST" enctype="multipart/form-data">
+                        <form action="/update_product/{{ id_product }}" method="POST" enctype="multipart/form-data">
                     {% endif %}
 
                     {% if not id_product %}
@@ -119,7 +119,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="form-group">
+                        <div class="form-group">
 
                         {% if description %}
                             <textarea class="form-control" id="description" rows="3"
@@ -130,7 +130,27 @@
                             <textarea class="form-control" id="description" rows="3"
                                 placeholder="Descripción" name="description"></textarea>
                         {% endif %}
-                                              </div>
+                        </div>
+
+                        {% if available == 'on' %}
+                            <div class="text-center">
+                                <label class="switch">
+                                    <input type="checkbox" id="check-available" name="available" checked>
+                                  <span class="slider round"></span>
+                                </label>
+                                <div id="text-available">DISPONIBLE</div>
+                            </div>
+                        {% endif %}
+
+                        {% if available == 'off' %}
+                            <div class="text-center">
+                                <label class="switch">
+                                    <input type="checkbox" id="check-available" name="available">
+                                  <span class="slider round"></span>
+                                </label>
+                                <div id="text-available">NO DISPONIBLE</div>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="right">
                       <div class="image-area">
@@ -164,7 +184,7 @@
 
 
 {% block scripts %}
- <script src = "../static/js/render_productImage.js"></script>
+ <script src = "../static/js/add-edit-product.js"></script>
 {% endblock %}
 
 {% endblock %}

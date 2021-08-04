@@ -1,0 +1,88 @@
+
+<div>
+
+  <div class= "table-header">
+    <h5 class="title-view">
+    Mis Productos
+  </h5>
+  <a class="btn btn-outline-success" 
+     href="{{ url_for('products.upload_product') }}" 
+     style="max-height: 2.3rem;">
+      Agregar producto &nbsp;  
+      <i class="fas fa-plus"></i></a>
+  </div>
+
+
+<div class="table-wrapper">
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre del Producto</th>
+        <!--th scope="col" class="td-center">Número de ventas</th-->
+        <th scope="col" class="td-center">Disponible</th>
+        <th scope="col"> Precio</th>
+        <th scope="col" class="td-center">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <th scope="row">{{product.name}}</th>
+        <td class="td-center">
+          {% if product.available%}
+          <i class="fas fa-check"></i>
+          {% endif %}
+          {% if not product.available%}
+          <i class="fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>$ &nbsp;{{product.price}}</td>
+        <!--td  class="td-center"><i class="fas fa-ellipsis-h"></i></td-->
+        <td  class="td-center">
+          <button role="button" 
+                  type="button" 
+                  class="btn dropdown"> 
+                  <a href="{{ url_for('products.update_product', id_product = product.id ) }}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+          </button>
+            &nbsp;
+            &nbsp;
+          <button role="button" 
+                  type="button" 
+                  class="btn dropdown"> 
+                  <a 
+                    data-toggle="modal" 
+                    data-target="#staticBackdrop"
+                    data-url="{{ url_for('products.delete_product', id_product = product.id ) }}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                <img src="../static/img/warning.png" width="100rem" height = "100rem" alt="" style="justify-content: center;">
+                <br>
+                <br>
+                  ¿Estás Seguro de elimininar este producto?
+                  <br>
+                  Esta acción no es reversible
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <!--a class="btn btn-danger" href="{{ url_for('products.delete_product', id_product = product.id ) }}">Eliminar</a-->
+                  <a class="btn btn-danger" id="confirm-delete">Eliminar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--End Modal-->
+        </td>
+      </tr>
+       {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
