@@ -39,21 +39,25 @@
         <td>$ &nbsp;{{product.price}}</td>
         <!--td  class="td-center"><i class="fas fa-ellipsis-h"></i></td-->
         <td  class="td-center">
-          <div class="dropdown open">
-            <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <a class="dropdown-item" href="{{ url_for('products.update_product', id_product = product.id ) }}">Editar</a>
-                <!--a class="dropdown-item" href="{{ url_for('products.delete_product', id_product = product.id ) }}">Eliminar</a-->
-                <!--a id="confirm-delete" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Eliminar</a-->
-                <a class="dropdown-item" 
-                   data-toggle="modal" 
-                   data-target="#staticBackdrop"
-                   data-url="{{ url_for('products.delete_product', id_product = product.id ) }}">
-                   Eliminar
-                </a>
-
-              </div>
-          </div>
+          <button role="button" 
+                  type="button" 
+                  class="btn dropdown"> 
+                  <a href="{{ url_for('products.update_product', id_product = product.id ) }}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+          </button>
+            &nbsp;
+            &nbsp;
+          <button role="button" 
+                  type="button" 
+                  class="btn dropdown"> 
+                  <a 
+                    data-toggle="modal" 
+                    data-target="#staticBackdrop"
+                    data-url="{{ url_for('products.delete_product', id_product = product.id ) }}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+          </button>
           <!-- Modal -->
           <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
