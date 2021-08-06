@@ -87,6 +87,3 @@ class Order(db.Model):
 	buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
 
-	def __init__(self, stars, review):
-		self.stars = stars
-		self.review = review
