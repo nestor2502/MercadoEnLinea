@@ -105,3 +105,6 @@ def delete_product(id_product):
         print(e)
         flash('Ocurrió un error al intentar eliminar el producto, intente más tarde.','error')
         return False
+
+def search_product(name):
+    return Product.query.filter_by(name=name).all()
