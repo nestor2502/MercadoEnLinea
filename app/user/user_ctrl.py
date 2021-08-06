@@ -3,34 +3,11 @@ from flask import jsonify, flash, session
 from flask_login.utils import login_user, logout_user, current_user
 from app.models import db
 
-import re, secrets, string, pathlib
-import smtplib, ssl
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import re, secrets, string
+
+from app.email.email import send_signin_email
 
 
-def get_html(password):
-    """Obtains the email template used in the send_email() function.
-
-    Parameters
-    ----------
-    password : str
-        The User's new password to be sended via email
-
-    Returns
-    -------
-    str
-        body, the email template.
-    """
-    email_path = str(pathlib.Path(__file__).parent.resolve()).split("/user")[0]+"/templates/email-template.html"
-    body = ""
-    with open(email_path, 'r') as reader:
-        for line in reader.readlines():
-            if "<b>#PASSWORD#</b>" in line:
-                body += line.replace("<b>#PASSWORD#</b>", f"<b>{password}</b>")
-            else:
-                body += line
-    return body
 
 
 
@@ -53,48 +30,6 @@ def create_password():
     password += secrets.choice(string.ascii_uppercase)
     return password
 
-def send_email(receiver_email, password):
-    """Sends an email to the new user with their new password.
-
-    Parameters
-    ----------
-    email : str
-        The User's email
-    password : str
-        The User's password
-
-    Returns
-    -------
-    str
-        Password, the user's password
-    """
-
-    #TODO Find a way to not display mercado en linea email's password in the code
-
-    port = 465  # For SSL
-    smtp_server = "smtp.gmail.com"
-    sender_email = "mercadoenlinea.is21@gmail.com"
-    sender_pass = "y$ny2s4GfG"
-
-    subject = "Correo de verificación"
-
-    html = MIMEText(get_html(password), "html")
-    plain = MIMEText('', 'plain')
-    
-    message = MIMEMultipart()
-    message["From"] = sender_email
-    message["To"] = receiver_email
-    message["Subject"] = subject
-    
-    message.attach(plain)
-    message.attach(html)
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, sender_pass)
-        server.sendmail(sender_email, receiver_email, message.as_string())
-
-    return password
 
 def is_valid_email(email):
     """Using regex checks if an email is valid
@@ -151,7 +86,7 @@ def signin(email, name, phone, role):
     registered_role = Role.query.filter_by(name = role).first()
 
     password = create_password()
-    send_email(email, password)
+    send_signin_email(email, password)
     
     if registered_role is not None:
         new_user = User(name, email, phone, password)

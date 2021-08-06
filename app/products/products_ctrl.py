@@ -7,6 +7,8 @@ from app import ALLOWED_EXTENSIONS
 
 import os, string, random
 
+from app.email.email import send_buyorder_email
+
 def get_product_image_filename(name):
     """
         Obtains the product filename from the current logged user.
@@ -226,5 +228,6 @@ def buy_product(product_id):
     product.orders.append(order)
     db.session.add(order)
     db.session.commit()
+    send_buyorder_email(current_user.email, product, order, seller.name)
     flash(f'La compra ha sido exitosa. \n Se ha mandado su orden de compra al correo: \n {current_user.email}','success')
     return
