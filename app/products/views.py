@@ -1,4 +1,6 @@
+from math import prod
 from flask import render_template, redirect, url_for, request, jsonify
+from flask.helpers import flash
 from flask_login import current_user, login_required
 
 from . import products
@@ -65,8 +67,21 @@ def update_product(id_product):
 @products.route('/delete_product/<id_product>', methods = ['GET'])
 @login_required
 def delete_product(id_product):
+    if user_ctrl.get_user_role() != "Vendedor":
+        return render_template('404-error.html')
+    if not products_ctrl.verify_product(id_product):
+        return render_template('404-error.html')
     products_ctrl.delete_product(id_product)
-    return redirect(url_for('products.home'))   
+    return redirect(url_for('products.home'))  
+
+@products.route('/buy_product/<product_id>', methods = ['GET'])
+@login_required
+def buy_product(product_id):
+    if request.method == 'GET':
+        if user_ctrl.get_user_role() != "Comprador":
+            return render_template('404-error.html')
+        products_ctrl.buy_product(product_id)
+        return redirect(url_for('products.home'))   
     
 
 
