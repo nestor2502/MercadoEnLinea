@@ -133,6 +133,8 @@ def signin(email, name, phone, role):
         True if the user was successfully registered
         False if a issue happened, uses flask's flash feature to display the issue to the user.
     """
+    email = email.lower()
+
     if not is_valid_email(email):
         flash("Email incorrecto, intenta con otro",'error')
         return False
@@ -190,6 +192,9 @@ def login(email, password):
         True if the user was successfully logged
         False if a issue happened, flask's flash feature is used to display the issue to the user.
     """
+    
+    email = email.lower()
+
     try:
         registered_user = User.query.filter_by(email = email).first()
     except Exception as e:
