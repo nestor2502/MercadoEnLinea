@@ -105,3 +105,22 @@ def delete_product(id_product):
         print(e)
         flash('Ocurrió un error al intentar eliminar el producto, intente más tarde.','error')
         return False
+
+def buy_product(product_id):
+    product = Product.query.filter_by(id = product_id).first()
+    if product is None or not product.available:
+        flash('El producto no está disponible. \n Intente con otro producto.', 'error')
+        return
+    seller = User.query.filter_by(id = product.user_id).first()
+    if seller is None:
+        print("adioos")
+        flash('Ocurrio un error', 'error')
+        return
+    order = Order()
+    current_user.buyer_orders.append(order)
+    seller.seller_orders.append(order)
+    product.orders.append(order)
+    db.session.add(order)
+    db.session.commit()
+    flash(f'La compra ha sido exitosa. \n Se ha mandado su orden de compra al correo: \n {current_user.email}','success')
+    return

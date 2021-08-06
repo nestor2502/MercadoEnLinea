@@ -11,7 +11,7 @@
                     <p class="card-text price">${{product.price}}</p>
                     <span class="card-title">{{product.name}}</span>
                     <p class="card-text description">{{product.description}}</p>
-                    <a href="#" class="btn btn-primary">Comprar</a>
+                    <a href="{{ url_for('products.buy_product', product_id = product.id) }}" class="btn btn-primary">Comprar</a>
                 </div>
             </div>
         </div>
