@@ -212,6 +212,7 @@ def buy_product(product_id):
 
     """
     product = get_product(product_id)
+
     if product is None or not product.available:
         flash('El producto no está disponible. \n Intente con otro producto.', 'error')
         return
