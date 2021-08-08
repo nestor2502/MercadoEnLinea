@@ -41,6 +41,7 @@ def upload_product():
 def update_product(id_product):
     if user_ctrl.get_user_role() != "Vendedor":
         return render_template('404-error.html')
+
     if not products_ctrl.verify_product(id_product):
         return render_template('404-error.html')
 
@@ -72,7 +73,15 @@ def delete_product(id_product):
     if not products_ctrl.verify_product(id_product):
         return render_template('404-error.html')
     products_ctrl.delete_product(id_product)
-    return redirect(url_for('products.home'))  
+    return redirect(url_for('products.home'))   
+
+@products.route('/search', methods = ['GET'])
+@login_required
+def search_product():
+    role = user_ctrl.get_user_role()
+    name = request.args.get("name")
+    products = products_ctrl.search_product(name)
+    return render_template('home.html', search_products=products, role=role)
 
 @products.route('/buy_product/<product_id>', methods = ['GET'])
 @login_required
@@ -82,6 +91,4 @@ def buy_product(product_id):
             return render_template('404-error.html')
         products_ctrl.buy_product(product_id)
         return redirect(url_for('products.home'))   
-    
-
 

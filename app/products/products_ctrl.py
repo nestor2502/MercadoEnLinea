@@ -198,6 +198,9 @@ def delete_product(id_product):
         flash('Ocurrió un error al intentar eliminar el producto, intente más tarde.','error')
         return False
 
+def search_product(name):
+    return Product.query.filter_by(name=name).all()
+
 def buy_product(product_id):
     """Creates an Order and links it to the buyer an seller user, checks if the
         product is available and other alternate cases.
