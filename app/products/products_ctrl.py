@@ -4,7 +4,7 @@ from flask import jsonify, flash, current_app
 from flask_login.utils import current_user
 from app.models import db
 from app import ALLOWED_EXTENSIONS
-from sqlalchemy import func
+from sqlalchemy import func, and_
 
 import os, string, random
 
@@ -231,7 +231,6 @@ def delete_product(id_product):
         flash("Producto eliminado exitosamente.","success")
         return True
     except Exception as e:
-        print(e)
         flash('Ocurrió un error al intentar eliminar el producto, intente más tarde.','error')
         return False
 
@@ -288,7 +287,7 @@ def buy_product(product_id):
 
 def add_product_rate(id_product, rate, comment):
     try: 
-        order = Order.query.filter_by(product_id = id_product).first()
+        order = db.session.query(Order).filter((Order.product_id == id_product) & (Order.buyer_id == current_user.id)).first()
         if order.review == None:
             order.stars = rate
             order.review = comment
@@ -306,8 +305,10 @@ def add_product_rate(id_product, rate, comment):
 def get_rate_by_product(id_product):
     try:
         orders = Order.query.filter_by(product_id = id_product).all()
+        sum_stars = 0
         rates = []
         for order in orders:
+            sum_stars = sum_stars + order.stars
             rate = {'user_name': '', 'date': order.date, 'stars': order.stars, 'comment': order.review}
             try:
                 if not order.review == None:
@@ -316,8 +317,16 @@ def get_rate_by_product(id_product):
                     rates.append(rate)
             except Exception as e:
                 flash('Aún no compras el producto', 'error')
-        return rates
+        if len(rates) > 0:
+            sum_stars = sum_stars//len(rates)
+        else :
+            sum_stars = 0;
+        return [sum_stars, rates]
     except Exception as e:
-        print(e)
         flash('Hubo un error al obtener las reseñas', 'error')
-        
+
+def purchase_exists(id_product):
+    for order in current_user.buyer_orders:
+        if int(id_product) == order.product_id:
+            return True
+    return False

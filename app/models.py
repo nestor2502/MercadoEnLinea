@@ -82,7 +82,7 @@ class Order(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	stars = db.Column(db.Integer)
 	review = db.Column(db.String(1000))
-	date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+	date = db.Column(db.DateTime, default=datetime.datetime.now)
 	seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	product_id = db.Column(db.Integer, db.ForeignKey('product.id'))

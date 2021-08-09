@@ -32,7 +32,7 @@
      {% for product in products %}
       <tr>
         <th scope="row">{{product[1].name}}</th>
-        <th scope="td-center">{{product[0]}}</th>
+        <th scope="td-center">{{'{:%d %b %y %X}'.format(product[0])}}</th>
         <td class="td-center">
           {% if product[1].available%}
           <i class="fas fa-check"></i>
