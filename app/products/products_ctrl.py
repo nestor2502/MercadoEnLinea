@@ -234,3 +234,4 @@ def buy_product(product_id):
     send_buyorder_email(current_user.email, product, order, seller.name)
     flash(f'La compra ha sido exitosa. \n Se ha mandado su orden de compra al correo: \n {current_user.email}','success')
     return
+

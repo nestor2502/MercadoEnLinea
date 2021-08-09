@@ -1,0 +1,39 @@
+section .container{
+    display: flex;
+}
+
+.left {
+    padding: 10px;
+    width: 40%;
+}
+
+.left img {
+    width: 100%;
+    height:auto;
+}
+
+.right {
+    padding: 10px;
+    width: 60%;
+}
+.right button {
+    position: relative;
+    bottom: 0px;
+}
+
+.rate {
+    padding-bottom: 5px;
+}
+
+@media (max-width:768px) {
+    section .container {
+        display: block;
+    }
+    .left {
+        width: 100%;
+    }
+
+    .right {
+        width: 100%;
+    }
+}
