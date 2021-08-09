@@ -124,7 +124,8 @@ def rate_product(id_product):
 @login_required
 def get_my_shopping():
     role = user_ctrl.get_user_role()
-    return render_template('my-shopping.html', role = role)
+    products = products_ctrl.get_my_shopping()
+    return render_template('my-shopping.html', products = products, role = role)
 
 
 

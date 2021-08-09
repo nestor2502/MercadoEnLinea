@@ -1,0 +1,28 @@
+.wrap-content-seller {
+  width: 97rem;
+  border-radius: 5px;
+  position: absolute;
+  background-color:rgba(216, 215, 215, 0.5);
+
+}
+
+.table-wrapper{
+  width: 100%;
+}
+
+.title-view{
+  margin: 20px 0 20px 8px;
+}
+
+thead{
+  color: #9FA2B4;
+}
+
+.td-center{
+  text-align: center;
+}
+
+.table-header{
+  display: flex;
+  justify-content: space-between;
+}
