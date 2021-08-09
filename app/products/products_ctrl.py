@@ -236,6 +236,18 @@ def delete_product(id_product):
         return False
 
 def search_product(name):
+    """Search a product by the specific name
+
+    Parameters
+    ----------
+    name : str
+        The product's name
+
+    Returns
+    -------
+    Products
+        List of products with the same name
+    """
     products = Product.query.all()
     matchProducts = []
     for product in products:
