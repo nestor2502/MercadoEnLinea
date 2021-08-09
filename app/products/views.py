@@ -92,3 +92,18 @@ def buy_product(product_id):
         products_ctrl.buy_product(product_id)
         return redirect(url_for('products.home'))   
 
+
+@products.route('/getProduct', methods = ['GET'])
+@login_required
+def getProduct():
+    if request.method == 'GET':
+        if user_ctrl.get_user_role() != "Comprador":
+            return render_template('404-error.html')
+        product_id = request.args.get("product_id")
+        product = products_ctrl.get_product(product_id)
+        return render_template('get-product.html', product_id=product.id)
+
+
+
+
+
