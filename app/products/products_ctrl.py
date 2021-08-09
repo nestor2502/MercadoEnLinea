@@ -238,6 +238,19 @@ def delete_product(id_product):
 def search_product(name):
     return Product.query.filter_by(name=name).all()
 
+def get_my_shopping():
+    """
+    Returns a list with the purchases made by the user
+
+    Returns
+    -------
+    A list with the purchases made by the user
+    """
+    product_list = []
+    for order in current_user.buyer_orders:
+        product_list.append([order.date ,get_product(order.product_id)])
+    return product_list
+
 def buy_product(product_id):
     """Creates an Order and links it to the buyer an seller user, checks if the
         product is available and other alternate cases.

@@ -1,11 +1,58 @@
 {% extends "home.html" %}
 
+{% block title %}My Shopping{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="../static/css/my_shopping.css">
+{% endblock %}
+
 {% block mainContent %}
-<body>
+<div>
+  	<div class= "table-header">
+  		<h5 class="title-view">
+  			Mis Compras
+  		</h5>
+	</div>
 
-<p>Mis compras</p>
+  {% if products|length > 1 %}
+  <div class="table-wrapper">
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre del Producto</th>
+        <th scope="col">Fecha</th>
+        <!--th scope="col" class="td-center">Número de ventas</th-->
+        <th scope="col" class="td-center">Disponible</th>
+        <th scope="col"> Precio</th>
+        <th scope="col" class="td-center">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for product in products %}
+      <tr>
+        <th scope="row">{{product[1].name}}</th>
+        <th scope="td-center">{{product[0]}}</th>
+        <td class="td-center">
+          {% if product[1].available%}
+          <i class="fas fa-check"></i>
+          {% else %}
+          	<i class="fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>$ {{product[1].price}}</td>
+        <td class="td-center"><a href="{{ url_for('products.getProduct', product_id = product[1].id) }}"><i class="fas fa-eye"></i></a>
+        </td>
+      </tr>
+       {% endfor %}
+    </tbody>
+  </table>
+</div>
+  {% else %}
+    <div class="table-wrapper" style="text-align: center;">
+       <img src="../static/img/no_results.jpg" height="700" width="800">
+    </div>
+  {% endif %}
 
-  
-</body>
-
+</div>
 {% endblock %}
