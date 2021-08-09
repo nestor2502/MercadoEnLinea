@@ -122,13 +122,6 @@ def get_my_shopping():
     return render_template('my-shopping.html', role = role)
 
 
-@products.route('/profile', methods = ['GET'])
-@login_required
-def get_my_profile():
-    role = user_ctrl.get_user_role()
-    return render_template('profile.html', role = role)
-
-
 
 
 
