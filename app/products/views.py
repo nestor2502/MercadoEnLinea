@@ -109,10 +109,11 @@ def getProduct():
             return render_template('404-error.html')
         product_id = request.args.get("product_id")
         product = products_ctrl.get_product(product_id)
-        rates = products_ctrl.get_rate_by_product(product_id)
-        print('rates')
-        print(rates)
-        return render_template('product-detail.html', product=product, rates = rates, role = role)
+        product_info = products_ctrl.get_rate_by_product(product_id)
+        rates = product_info[1]
+        average_stars = product_info[0]
+        can_review = products_ctrl.purchase_exists(product_id)
+        return render_template('product-detail.html', average_stars = average_stars, product=product, rates = rates, role = role, can_review = can_review)
 
 @products.route('/my-shopping', methods = ['GET'])
 @login_required
