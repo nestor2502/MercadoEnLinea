@@ -81,9 +81,12 @@ def delete_product(id_product):
 @login_required
 def search_product():
     role = user_ctrl.get_user_role()
-    name = request.args.get("name")
-    products = products_ctrl.search_product(name)
-    return render_template('home.html', search_products=products, role=role)
+    if role == 'Comprador': 
+        name = request.args.get("name")
+        products = products_ctrl.search_product(name)
+        return render_template('home-search.html', products=products, role=role)
+
+    return render_template('404-error.html')
 
 @products.route('/buy_product/<product_id>', methods = ['GET'])
 @login_required
