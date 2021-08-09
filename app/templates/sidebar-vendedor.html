@@ -1,9 +1,13 @@
 <ul class="list-unstyled components">
     <li>
-        <a href="#" class="d-block p-3"><i class='fas fa-chart-pie mr-2 lead'></i></i>Mis productos</a>
+        <a href="{{url_for('products.home')}}" 
+           class="d-block p-3"
+           onclick="moveTo(id)"><i class='fas fa-chart-pie mr-2 lead'></i></i>Mis productos</a>
     </li>
     <li>
-        <a href="#" class="d-block p-3 "><i class='fas fa-user-circle mr-2 lead'></i></i>Perfil</a>
+        <a href="{{url_for('products.get_my_profile')}}"
+           class="d-block p-3 "
+           onclick="moveTo(id)"><i class='fas fa-user-circle mr-2 lead'></i></i>Perfil</a>
     </li>
     <li id="logout_sidebar_button">
         <a href="{{ url_for('user.logout') }}" class="d-block p-3 "><i class='fas fa-sign-out-alt mr-2 lead'></i></i>Cerrar sesión</a>

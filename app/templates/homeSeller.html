@@ -1,4 +1,12 @@
+{% extends "home.html" %}
 
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
+{% endblock %}
+
+{% block mainContent %}
 <div>
 
   <div class= "table-header">
@@ -86,3 +94,4 @@
   </table>
 </div>
 </div>
+{% endblock %}

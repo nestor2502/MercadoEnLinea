@@ -13,10 +13,10 @@ def home():
     role = user_ctrl.get_user_role()
     if role == 'Comprador': 
         products = products_ctrl.get_top_products()
+        return render_template('home-buyer.html', products = products, role = role)
     elif role == 'Vendedor':
         products = products_ctrl.get_my_products()
-    return render_template('home.html', products = products, role = role)
-    #return render_template('home.html', role = role) 
+        return render_template('homeSeller.html', products = products, role = role)
 
 
 @products.route('/upload_product', methods = ['GET','POST'])
@@ -112,6 +112,19 @@ def rate_product(id_product):
         rate_description = request.form['rate_description']
         products_ctrl.add_rate_product(product_id, rate_description)
         return render_template('home.html')
+
+@products.route('/my-shopping', methods = ['GET'])
+@login_required
+def get_my_shopping():
+    role = user_ctrl.get_user_role()
+    return render_template('my-shopping.html', role = role)
+
+
+@products.route('/profile', methods = ['GET'])
+@login_required
+def get_my_profile():
+    role = user_ctrl.get_user_role()
+    return render_template('profile.html', role = role)
 
 
 

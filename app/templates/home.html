@@ -7,13 +7,6 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="../static/css/template.css">
-    {% if role == 'Comprador' %}
-        <link rel="stylesheet" type="text/css" href="../static/css/home-buyer.css">
-        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
-    {% endif %}
-    {% if role == 'Vendedor' %}
-        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
-    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -65,21 +58,10 @@
             </nav>
             <div id="main-content-bg">
                 <div id="main-content">
-                    {% if  role == 'Vendedor' %}
-                         {% include "homeSeller.html" %}
-                    {% endif %}
-                    {% if  role == 'Comprador' %}
-                        {% if search_products %}
-                            {% include "search_products.html" %}
-                        {% endif %}
-
-                        {% if not search_products %}
-                            {% include "home-buyer.html" %}
-                        {% endif %}
-                    {% endif %}
+                    {% block mainContent %}
+                    {% endblock %}
                 </div>
             </div>
-        </div>
     </div>
 </body>
 {% include "modal.html" %}

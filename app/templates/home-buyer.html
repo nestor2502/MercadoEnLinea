@@ -1,4 +1,16 @@
-<section id="top-sales">
+{% extends "home.html" %}
+
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="../static/css/home-buyer.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
+{% endblock %}
+
+{% block mainContent %}
+
+<body>
+    <section id="top-sales">
     <div class="title">
         <h3>Lo más vendido</h3>
     </div>
@@ -18,3 +30,6 @@
         {% endfor %}
     </div>
 </section>
+
+</body>
+{% endblock %}
