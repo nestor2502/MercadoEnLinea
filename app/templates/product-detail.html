@@ -6,9 +6,6 @@
         Actualizar Producto
     {% endif %}
 
-    {% if not id_product %}
-        Agregar Producto
-    {% endif %}
 {% endblock %}
 
 {% block head %}
@@ -26,7 +23,7 @@
             <div class="sidebar-header mr-2">
                 <img src="../static/img/Maanostítulo.png" width="60" height="60">
             </div>
-            {% include "sidebar-vendedor.html" %}
+            {% include "sidebar-comprador.html" %}
         </nav>
 
         <!-- Page Content  -->
@@ -63,13 +60,24 @@
                     <section class="mt-5">
                         <div class="container">
                             <div class="left">
+                                    {% if product %}
+                                        <img id="imageResult" width="50%" height="auto"
+                                            src="{{ url_for('upload', filename=product.photo) }}" class="img-fluid">
+                                    {% endif %}
+                                    {% if not product %}
+                                        <img id="imageResult" width="200" height="200" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
+                                    {% endif %}
                                 <div style="overflow: hidden;">
-                                    <img class="img-fluid" id="NZoomImg" data-NZoomscale="1.5" src="assets/img/plei5.png" >
-                                </div>                                
+                                </div>
                             </div>
                             <div class="right">
-                                <h5>Playstation 5</h5>
-                                <p class="mb-2 text-muted text-uppercase small">Disponible</p>
+                                {% if product %}
+                                    {% if product.available %}
+                                        <p class="mb-2 text-muted text-uppercase small">Disponible</p>
+                                    {% else %}
+                                        <p class="mb-2 text-muted text-uppercase small">No Disponible</p>
+                                    {% endif %}
+                                {% endif %}
                                 <div class="rate">
                                     <i class="fas fa-star fa-sm text-primary"></i>
                                     <i class="fas fa-star fa-sm text-primary"></i>
@@ -77,10 +85,9 @@
                                     <i class="fas fa-star fa-sm text-primary"></i>
                                     <i class="fas fa-star fa-sm text-primary"></i>
                                 </div>
-                                <p><span class="mr-1"><strong>$12.99</strong></span></p>
+                                <p><span class="mr-1"><strong>${{ product.price }}</strong></span></p>
                                 <p class="pt-1">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, sapiente illo. Siterror voluptas repellat rerum quidem, soluta enim perferendis voluptates laboriosam. Distinctio, officia quis dolore quos sapiente tempore alias.
-                                </p>
+                                {{ product.description }}                                </p>
                                 <h6>Información del Vendedor</h6>
                                 <div>
                                     <button type="button" class="btn btn-primary">Comprar</button>
@@ -154,10 +161,10 @@
                                     <i class="fas fa-star fa-sm text-primary"></i>
                                 </div>
                             </div>
-                            <form>
+                            <form action="/rate_product/{{ product.id }}" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>Tu comentario</label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea name="rate_description" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary btn-sm" type="button"> Comentar y calificar</button>
