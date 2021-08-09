@@ -366,13 +366,9 @@ def get_rate_by_product(id_product):
     except Exception as e:
         print(e)
         flash('Hubo un error al obtener las reseñas', 'error')
-<<<<<<< HEAD
-        
-=======
 
 def purchase_exists(id_product):
     for order in current_user.buyer_orders:
         if int(id_product) == order.product_id:
             return True
     return False
->>>>>>> realese
