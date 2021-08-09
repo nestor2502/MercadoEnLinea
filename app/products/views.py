@@ -7,12 +7,14 @@ from . import products
 from app.products import products_ctrl
 from app.user import user_ctrl
 
+TOP_PRODUCTS_LIMIT = 12
+
 @products.route('/home', methods = ['GET'])
 @login_required
 def home():
     role = user_ctrl.get_user_role()
     if role == 'Comprador': 
-        products = products_ctrl.get_top_products()
+        products = products_ctrl.get_top_products(TOP_PRODUCTS_LIMIT)
         return render_template('home-buyer.html', products = products, role = role)
     elif role == 'Vendedor':
         products = products_ctrl.get_my_products()

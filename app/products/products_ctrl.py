@@ -4,6 +4,7 @@ from flask import jsonify, flash, current_app
 from flask_login.utils import current_user
 from app.models import db
 from app import ALLOWED_EXTENSIONS
+from sqlalchemy import func
 
 import os, string, random
 
@@ -181,8 +182,44 @@ def update_product(id_product, name, price, description, available, image_file):
     flash("Producto editado exitosamente.","success")
     return True
 
-def get_top_products():
-    return Product.query.all()
+def get_top_products(limit):
+    """Counts the amount of purchases of every product and orders them.
+        Then if there are not enough products it fills the list with 
+        unselled products.
+
+    Parameters
+    ----------
+    limit : int
+        How many products will be displayed
+
+    Returns
+    -------
+        List : Products
+            The list of products to be displayed
+
+    """
+    count_ = func.count('*')
+    top_products_list = []
+    counter = 0
+    #Obtains a duple where (product_id,product_orders) using counting and grouping.
+    top_products = db.session.query(Order.product_id, count_).group_by(Order.product_id).order_by(count_.desc()).all()
+    for product_id,purchases in top_products:
+        if get_product(product_id).available:
+            top_products_list.append(get_product(product_id))
+            counter +=1
+        if counter >= limit:
+            break;
+    #If there was not enough best selling products top products is filled
+    # with unselled products
+    if counter < limit:
+        products = Product.query.all()
+        for product in products:
+            if product not in top_products_list and product.available:
+                top_products_list.append(product)
+                counter +=1
+            if counter >= limit:
+                break
+    return top_products_list
 
 def get_my_products():
     return Product.query.filter((Product.user_id == current_user.id))
