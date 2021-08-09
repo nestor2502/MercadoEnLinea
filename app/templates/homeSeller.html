@@ -21,7 +21,9 @@
   </div>
 
 
-<div class="table-wrapper">
+
+    {% if products.first() %}
+  <div class="table-wrapper">
     <table class="table table-hover">
     <thead>
       <tr>
@@ -93,5 +95,12 @@
     </tbody>
   </table>
 </div>
+  {% endif %}
+   {% if not products.first() %}
+    <div class="table-wrapper" style="text-align: center;">
+       <img src="../static/img/no_results.jpg" height="700" width="800">
+    </div>
+  {% endif %}
+
 </div>
 {% endblock %}
