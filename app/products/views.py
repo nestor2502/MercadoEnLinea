@@ -101,7 +101,18 @@ def getProduct():
             return render_template('404-error.html')
         product_id = request.args.get("product_id")
         product = products_ctrl.get_product(product_id)
-        return render_template('get-product.html', product_id=product.id)
+        return render_template('product-detail.html', product=product)
+
+@products.route('/rate_product/<id_product>', methods = ['POST'])
+@login_required
+def rate_product(id_product):
+    if request.method == 'POST':
+        if user_ctrl.get_user_role() != "Comprador":
+            return render_template('404-error.html')
+        rate_description = request.form['rate_description']
+        products_ctrl.add_rate_product(product_id, rate_description)
+        return render_template('home.html')
+
 
 
 

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    {% if id_product %}
+        Actualizar Producto
+    {% endif %}
+
+    {% if not id_product %}
+        Agregar Producto
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/product-detail.css">
+{% endblock %}
+
+
+{% block content %}
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header mr-2">
+                <img src="../static/img/Maanostítulo.png" width="60" height="60">
+            </div>
+            {% include "sidebar-vendedor.html" %}
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid" id="topbar">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info position-relative">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <!--<i class="fas fa-align-left"></i>-->
+
+                        <form class="form-inline position-relative my-2">
+                          <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" style="border-radius: 40px; width: 100%;">
+                          <button class="btn btn-search position-absolute" type="submit" style="border-radius: 40px;"><i class="fas fa-search" style="color: lightgrey;"></i>
+                          </button>
+                        </form>
+                    </button>
+
+                    <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
+
+                      <span id="user-name">
+                       {% if current_user.is_authenticated %}
+                        Hola {{ current_user.name }} !
+                        <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&background=random&size=32&rounded=true">
+                        {% endif %}
+                      </span>
+                    </div>
+                </div>
+            </nav>
+            <div id="main-content-bg">
+                <div id="main-content">
+                    <section class="mt-5">
+                        <div class="container">
+                            <div class="left">
+                                    {% if product %}
+                                        <img id="imageResult" width="50%" height="auto"
+                                            src="{{ url_for('upload', filename=product.photo) }}" class="img-fluid">
+                                    {% endif %}
+                                    {% if not product %}
+                                        <img id="imageResult" width="200" height="200" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
+                                    {% endif %}
+                                <div style="overflow: hidden;">
+                                </div>
+                            </div>
+                            <div class="right">
+                                {% if product %}
+                                    {% if product.available %}
+                                        <p class="mb-2 text-muted text-uppercase small">Disponible</p>
+                                    {% else %}
+                                        <p class="mb-2 text-muted text-uppercase small">No Disponible</p>
+                                    {% endif %}
+                                {% endif %}
+                                <div class="rate">
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </div>
+                                <p><span class="mr-1"><strong>${{ product.price }}</strong></span></p>
+                                <p class="pt-1">
+                                {{ product.description }}                                </p>
+                                <h6>Información del Vendedor</h6>
+                                <div>
+                                    <button type="button" class="btn btn-primary">Comprar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rounded shadow-sm p-4 mb-4 ratings-and-reviews">
+                            <h5>Calificaciones y Reseñas</h5>
+                            <div class="reviews-members pt-4 pb-4">
+                                <div class="reviews-members-header pt-4 pb-4">
+                                    <div class="float-right">
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                    </div>
+                                    <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
+                                    <p class="text-gray">Tue, 20 Mar 2020</p>
+                                </div>
+                                <div class="reviews-members-body">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="reviews-members pt-4 pb-4">
+                                <div class="reviews-members-header pt-4 pb-4">
+                                    <div class="float-right">
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                    </div>
+                                    <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
+                                    <p class="text-gray">Tue, 20 Mar 2020</p>
+                                </div>
+                                <div class="reviews-members-body">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="reviews-members pt-4 pb-4">
+                                <div class="reviews-members-header pt-4 pb-4">
+                                    <div class="float-right">
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                    </div>
+                                    <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
+                                    <p class="text-gray">Tue, 20 Mar 2020</p>
+                                </div>
+                                <div class="reviews-members-body">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <a class="text-center w-100 d-block mt-4 font-weight-bold text-primary" href="#">Ver todas las reseñas</a>
+                        </div>
+                        <div class="rounded shadow-sm p-4 mb-5 rating">
+                            <h5 class="mb-4">Reseña del producto</h5>
+                            <p class="mb-2">Califica el producto </p>
+                            <div class="mb-4">
+                                <div class="rate">
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </div>
+                            </div>
+                            <form action="/rate_product/{{ product.id }}" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label>Tu comentario</label>
+                                    <textarea name="rate_description" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-sm" type="button"> Comentar y calificar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "modal.html" %}
+</body>
+
+
+{% block scripts %}
+ <script src = "../static/js/product-detail.js"></script>
+{% endblock %}
+
+{% endblock %}
