@@ -308,14 +308,15 @@ def get_rate_by_product(id_product):
         sum_stars = 0
         rates = []
         for order in orders:
-            sum_stars = sum_stars + order.stars
             rate = {'user_name': '', 'date': order.date, 'stars': order.stars, 'comment': order.review}
             try:
                 if not order.review == None:
+                    sum_stars = sum_stars + order.stars
                     user = User.query.filter_by(id = order.buyer_id).first()
                     rate['user_name'] = user.name
                     rates.append(rate)
             except Exception as e:
+                print(e)
                 flash('Aún no compras el producto', 'error')
         if len(rates) > 0:
             sum_stars = sum_stars//len(rates)
@@ -323,6 +324,7 @@ def get_rate_by_product(id_product):
             sum_stars = 0;
         return [sum_stars, rates]
     except Exception as e:
+        print(e)
         flash('Hubo un error al obtener las reseñas', 'error')
 
 def purchase_exists(id_product):
