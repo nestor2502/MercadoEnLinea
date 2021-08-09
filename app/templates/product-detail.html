@@ -13,6 +13,7 @@
  {{ super() }}
   <link rel="stylesheet" type="text/css" href="../static/css/template.css">
   <link rel="stylesheet" type="text/css" href="../static/css/product-detail.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/rate.css">
 {% endblock %}
 
 
@@ -101,81 +102,73 @@
                         <!--Inicio reseñas-->
                         <div class="rounded shadow-sm p-4 mb-4 ratings-and-reviews">
                             <h5>Calificaciones y Reseñas</h5>
+                            {% for rate in rates %}
+                            {% if not rate['review'] == None%}
                             <div class="reviews-members pt-4 pb-4">
                                 <div class="reviews-members-header pt-4 pb-4">
                                     <div class="float-right">
+                                        {% for star in range(rate.stars)%}
                                         <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
+                                        {% endfor %}
                                     </div>
-                                    <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
-                                    <p class="text-gray">Tue, 20 Mar 2020</p>
+                                    <h6 class="mb-1"><a class="text-black" href="#">{{rate.user_name}}</a></h6>
+                                    <p class="text-gray">{{rate.date}}</p>
                                 </div>
                                 <div class="reviews-members-body">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
+                                    <p>{{rate.comment}}</p>
                                 </div>
                             </div>
                             <hr>
-                            <div class="reviews-members pt-4 pb-4">
-                                <div class="reviews-members-header pt-4 pb-4">
-                                    <div class="float-right">
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                    </div>
-                                    <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
-                                    <p class="text-gray">Tue, 20 Mar 2020</p>
-                                </div>
-                                <div class="reviews-members-body">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="reviews-members pt-4 pb-4">
-                                <div class="reviews-members-header pt-4 pb-4">
-                                    <div class="float-right">
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                        <i class="fas fa-star fa-sm text-primary"></i>
-                                    </div>
-                                    <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
-                                    <p class="text-gray">Tue, 20 Mar 2020</p>
-                                </div>
-                                <div class="reviews-members-body">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
-                                </div>
-                            </div>
-                            <hr>
+                            {% endif %}
+                            {% endfor %}
                             <a class="text-center w-100 d-block mt-4 font-weight-bold text-primary" href="#">Ver todas las reseñas</a>
                         </div>
                         <!--Fin reseñas-->
 
                         <!--Inicio mi reseña-->
-                        <div class="rounded shadow-sm p-4 mb-5 rating">
+                         <form action="/rate_product/{{product.id}}" method="POST" enctype="multipart/form-data">
+                        <div class="rounded shadow-sm p-4 mb-5">
                             <h5 class="mb-4">Reseña del producto</h5>
                             <p class="mb-2">Califica el producto </p>
-                            <div class="mb-4">
-                                <div class="rate">
-                                    <i class="fas fa-star fa-sm text-primary"></i>
-                                    <i class="fas fa-star fa-sm text-primary"></i>
-                                    <i class="fas fa-star fa-sm text-primary"></i>
-                                    <i class="fas fa-star fa-sm text-primary"></i>
-                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                <div class="mb-4">
+                                <div class="rating">
+                                <label>
+                                <input type="radio" name="rate" value="1" />
+                                <span class="icon">★</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="rate" value="2" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="rate" value="3" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>   
+                                </label>
+                                <label>
+                                    <input type="radio" name="rate" value="4" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="rate" value="5" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                </label>
                                 </div>
-                            </div>
-                            <form action="/rate_product/{{ product.id }}" method="POST" enctype="multipart/form-data">
-                                <div class="form-group">
+                                </div>
                                     <label>Tu comentario</label>
-                                    <textarea name="rate_description" class="form-control"></textarea>
+                                    <textarea name="rate_description" class="form-control" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary btn-sm" type="button"> Comentar y calificar</button>
+                                    <button class="btn btn-primary btn-sm" type="submit"> Comentar y calificar</button>
                                 </div>
                             </form>
                         </div>
@@ -192,6 +185,8 @@
 
 {% block scripts %}
 <script src = "../static/js/product-detail.js"></script>
+
+<script src="../static/js/rate.js"></script>
 {% endblock %}
 
 

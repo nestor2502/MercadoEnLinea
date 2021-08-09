@@ -108,17 +108,10 @@ def getProduct():
             return render_template('404-error.html')
         product_id = request.args.get("product_id")
         product = products_ctrl.get_product(product_id)
-        return render_template('product-detail.html', product=product)
-
-@products.route('/rate_product/<id_product>', methods = ['POST'])
-@login_required
-def rate_product(id_product):
-    if request.method == 'POST':
-        if user_ctrl.get_user_role() != "Comprador":
-            return render_template('404-error.html')
-        rate_description = request.form['rate_description']
-        products_ctrl.add_rate_product(product_id, rate_description)
-        return render_template('home.html')
+        rates = products_ctrl.get_rate_by_product(product_id)
+        print('rates')
+        print(rates)
+        return render_template('product-detail.html', product=product, rates = rates)
 
 @products.route('/my-shopping', methods = ['GET'])
 @login_required
@@ -128,6 +121,25 @@ def get_my_shopping():
     return render_template('my-shopping.html', products = products, role = role)
 
 
+@products.route('/profile', methods = ['GET'])
+@login_required
+def get_my_profile():
+    role = user_ctrl.get_user_role()
+    return render_template('profile.html', role = role)
+
+
+@products.route('/rate_product/<id_product>', methods = ['POST'])
+@login_required
+def add_rate(id_product):
+    role = user_ctrl.get_user_role()
+    if role != "Comprador":
+        return render_template('404-error.html')
+    print(request.method)
+    if request.method == 'POST':
+        rate = request.form['rate']
+        rate_description = request.form['rate_description']
+        products_ctrl.add_product_rate(id_product, rate, rate_description)
+        return redirect(url_for('products.home'))
 
 
 
