@@ -285,3 +285,39 @@ def buy_product(product_id):
     flash(f'La compra ha sido exitosa. \n Se ha mandado su orden de compra al correo: \n {current_user.email}','success')
     return
 
+
+def add_product_rate(id_product, rate, comment):
+    try: 
+        order = Order.query.filter_by(product_id = id_product).first()
+        if order.review == None:
+            order.stars = rate
+            order.review = comment
+            db.session.commit()
+            flash('Reseña guardada', 'success')
+            return True
+        else: 
+            flash('ya habías guardado un comentario', 'error')
+            return True
+    except Exception as e:
+        print(e)
+        flash('Hubo un error al guardar la reseña', 'error')
+        return False
+
+def get_rate_by_product(id_product):
+    try:
+        orders = Order.query.filter_by(product_id = id_product).all()
+        rates = []
+        for order in orders:
+            rate = {'user_name': '', 'date': order.date, 'stars': order.stars, 'comment': order.review}
+            try:
+                if not order.review == None:
+                    user = User.query.filter_by(id = order.buyer_id).first()
+                    rate['user_name'] = user.name
+                    rates.append(rate)
+            except Exception as e:
+                flash('Aún no compras el producto', 'error')
+        return rates
+    except Exception as e:
+        print(e)
+        flash('Hubo un error al obtener las reseñas', 'error')
+        
