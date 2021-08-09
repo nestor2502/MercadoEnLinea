@@ -104,6 +104,7 @@ def buy_product(product_id):
 @login_required
 def getProduct():
     if request.method == 'GET':
+        role = user_ctrl.get_user_role()
         if user_ctrl.get_user_role() != "Comprador":
             return render_template('404-error.html')
         product_id = request.args.get("product_id")
@@ -111,7 +112,7 @@ def getProduct():
         rates = products_ctrl.get_rate_by_product(product_id)
         print('rates')
         print(rates)
-        return render_template('product-detail.html', product=product, rates = rates)
+        return render_template('product-detail.html', product=product, rates = rates, role = role)
 
 @products.route('/my-shopping', methods = ['GET'])
 @login_required
