@@ -236,7 +236,12 @@ def delete_product(id_product):
         return False
 
 def search_product(name):
-    return Product.query.filter_by(name=name).all()
+    products = Product.query.all()
+    matchProducts = []
+    for product in products:
+        if product.name.__contains__(name):
+            matchProducts.append(product)
+    return matchProducts
 
 def get_my_shopping():
     """
