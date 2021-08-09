@@ -25,7 +25,6 @@
 
 .card {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    align-items: center;
 }
 
 .card-img-top {
@@ -52,5 +51,4 @@
 
 .card-body a{
     padding: 5px;
-    background: #2D3277 !important;
 }

@@ -7,13 +7,6 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="../static/css/template.css">
-    {% if role == 'Comprador' %}
-        <link rel="stylesheet" type="text/css" href="../static/css/home-buyer.css">
-        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
-    {% endif %}
-    {% if role == 'Vendedor' %}
-        <link rel="stylesheet" type="text/css" href="../static/css/home-template.css">
-    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -43,11 +36,11 @@
                         <span></span>
                         <span></span>
                         <span></span>
-                        <!--<i class="fas fa-align-left"></i>-->
                     </button>
                     {% if role == 'Comprador' %}
-                    <form class="form-inline position-relative my-2">
-                      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" style="border-radius: 40px; width: 100%;">
+                        <form action="/search" method="GET" class="form-inline position-relative my-2">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Buscar"
+                                aria-label="Search" style="border-radius: 40px; width: 100%;" name="name">
                       <button class="btn btn-search position-absolute" type="submit" style="border-radius: 40px;"><i class="fas fa-search" style="color: lightgrey;"></i>
                       </button>
                     </form>
@@ -56,23 +49,18 @@
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
                       <span id="user-name">
                        {% if current_user.is_authenticated %}
-                        Hola {{current_user.name }} !
-                      <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
+                       {{current_user.name }}
+                        <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=4141ab&size=32&rounded=true&color=ffffff">
                         {% endif %} </span>
                     </div>
                 </div>
             </nav>
             <div id="main-content-bg">
                 <div id="main-content">
-                    {% if  role == 'Vendedor' %}
-                         {% include "homeSeller.html" %}
-                    {% endif %}
-                    {% if  role == 'Comprador' %}
-                        {% include "home-buyer.html" %}
-                    {% endif %}
+                    {% block mainContent %}
+                    {% endblock %}
                 </div>
             </div>
-        </div>
     </div>
 </body>
 {% include "modal.html" %}

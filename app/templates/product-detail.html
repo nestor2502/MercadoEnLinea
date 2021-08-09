@@ -1,0 +1,154 @@
+{% extends "home.html" %}
+
+
+{% block title %}
+Product detail
+{% endblock %}
+
+{% block head %}
+ {{ super() }}
+  <link rel="stylesheet" type="text/css" href="../static/css/template.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/product-detail.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/rate.css">
+{% endblock %}
+
+
+{% block mainContent %}
+
+    <section class="mt-5">
+        <div class="container">
+            <div class="left">
+                    
+                <div style="overflow: hidden;">
+                    {% if product %}
+                        <img class="img-fluid" id="NZoomImg" data-NZoomscale="1.5"
+                            src="{{ url_for('upload', filename=product.photo) }}">
+                    {% endif %}
+                    {% if not product %}
+                        <img class="img-fluid" id="NZoomImg" data-NZoomscale="1.5" src="../static/img/image-regular.svg" class="img-fluid  mx-auto d-block">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="right">
+                {% if product %}
+                    {% if product.available %}
+                        <p class="mb-2 text-muted text-uppercase small">Disponible</p>
+                    {% else %}
+                        <p class="mb-2 text-muted text-uppercase small">No Disponible</p>
+                    {% endif %}
+                {% endif %}
+                <div class="rate">
+                    {% for star in range(average_stars)%}
+                        <i class="fas fa-star fa-sm text-primary"></i>
+                    {% endfor %}
+                    {% for star in range(5 - average_stars)%}
+                        <i class="far fa-star fa-sm text-primary"></i>
+                    {% endfor %}
+                </div>
+                <p><span class="mr-1"><strong>${{ product.price }}</strong></span></p>
+                <p class="pt-1">
+                {{ product.description }}                                </p>
+                <h6>Información del Vendedor</h6>
+                <div>
+                    <a      href="/buy_product/{{product.id}}"
+                            type="button" 
+                            class="btn btn-primary"
+                            >Comprar</a>
+                </div>
+            </div>
+        </div>
+        <!--Inicio reseñas-->
+        <div class="rounded shadow-sm p-4 mb-4 ratings-and-reviews">
+            <h5>Calificaciones y Reseñas</h5>
+            {% if rates|length < 1 %}
+                <span class="text-secondary text-center">No hay reseñas.</span>
+            {% else %}
+                {% for rate in rates %}
+                {% if not rate['review'] == None%}
+                <div class="reviews-members pt-4 pb-4">
+                    <div class="reviews-members-header pt-4 pb-4">
+                        <div class="float-right">
+                            {% for star in range(rate.stars)%}
+                            <i class="fas fa-star fa-sm text-primary"></i>
+                            {% endfor %}
+                            {% for star in range(5 - rate.stars)%}
+                            <i class="far fa-star fa-sm text-primary"></i>
+                            {% endfor %}
+                        </div>
+                        <h6 class="mb-1"><a class="text-black" href="#">{{rate.user_name}}</a></h6>
+                        <p class="text-gray">{{'{:%d %b %y %X}'.format(rate.date)}}</p>
+                    </div>
+                    <div class="reviews-members-body">
+                        <p>{{rate.comment}}</p>
+                    </div>
+                </div>
+                <hr>
+                {% endif %}
+                {% endfor %}
+            {% endif%}
+        </div>
+        <!--Fin reseñas-->
+        {% if can_review%}
+        <!--Inicio mi reseña-->
+        <form action="/rate_product/{{product.id}}" method="POST" enctype="multipart/form-data">
+        <div class="rounded shadow-sm p-4 mb-5">
+            <h5 class="mb-4">Reseña del producto</h5>
+            <p class="mb-2">Califica el producto </p>
+                <div class="mb-4">
+                <div class="rating">
+                <label>
+                <input type="radio" name="rate" value="1" required />
+                <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="rate" value="2" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="rate" value="3" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>   
+                </label>
+                <label>
+                    <input type="radio" name="rate" value="4" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="rate" value="5" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                </div>
+                </div>
+                    <label>Tu comentario</label>
+                    <textarea name="rate_description" class="form-control" required></textarea>
+                    <div class="form-group">
+                    <button class="btn btn-primary btn-sm mt-4" type="submit"> Comentar y calificar</button>
+                </div>
+                </div>
+            </form>
+        {% else %}
+        <div class="text-center text-secondary">
+            Solo puedes comentar productos que ya compraste    
+        </div>
+        {% endif%}
+        <!--Fin mi reseña-->
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src = "../static/js/product-detail.js"></script>
+
+<script src="../static/js/rate.js"></script>
+{% endblock %}
+
+

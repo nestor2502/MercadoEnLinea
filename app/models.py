@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app import login_manager
 
+import datetime
+
 db = SQLAlchemy()
 
 @login_manager.user_loader
@@ -19,7 +21,9 @@ class User(UserMixin,db.Model):
 	phone = db.Column(db.String(20))
 	password = db.Column(db.String(50))
 	role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
-	products = db.relationship("Product")
+	products = db.relationship('Product')
+	seller_orders = db.relationship('Order', lazy = 'dynamic', foreign_keys = 'Order.seller_id')
+	buyer_orders = db.relationship('Order', lazy = 'dynamic', foreign_keys = 'Order.buyer_id')
 
 	def __repr__(self):
 		return '<User %r>' % self.name
@@ -63,6 +67,7 @@ class Product(db.Model):
 	price = db.Column(db.Float)
 	photo = db.Column(db.String(10000))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	orders = db.relationship('Order')
 
 
 	def __init__(self, name, description, price, photo):
@@ -71,4 +76,14 @@ class Product(db.Model):
 		self.available = True
 		self.price =  price
 		self.photo = photo
-	
+
+class Order(db.Model):
+	__tablename__ = 'order'
+	id = db.Column(db.Integer, primary_key=True)
+	stars = db.Column(db.Integer)
+	review = db.Column(db.String(1000))
+	date = db.Column(db.DateTime, default=datetime.datetime.now)
+	seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+
