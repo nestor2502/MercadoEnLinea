@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 
-
+{% block title %}Search{% endblock %}
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="../static/css/home-buyer.css">
@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <p class="card-text price">${{product.price}}</p>
                     <span class="card-title">{{product.name}}</span>
-                    <p class="card-text description">{{product.description}}</p>
+                    <p class="card-text description">{{product.description[:10]}}</p>
                     <a href="{{ url_for('products.getProduct', product_id = product.id) }}" class="btn btn-primary">Detalles</a>
                 </div>
             </div>

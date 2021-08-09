@@ -1,5 +1,11 @@
 {% extends "home.html" %}
-
+{% block title %}
+{% if id_product %}
+    Update product
+{% else %}
+    Upload product
+{% endif %}
+{% endblock %}
 
 {% block head %}
  {{ super() }}
@@ -122,13 +128,13 @@
 
                   <div class="text-center">
                         {% if id_product %}
-                            <button id="updateButton" type="submit" class="btn btn-success">Actualizar</button>
+                            <button id="updateButton" type="submit" class="btn btn-outline-success">Actualizar</button>
                         {% endif %}
 
                         {% if not id_product %}
-                            <button id="uploadButton" type="submit" class="btn btn-success">Agregar</button>
+                            <button id="uploadButton" type="submit" class="btn btn-outline-success">Agregar</button>
                         {% endif %}
-                        <a class="btn btn-danger" href="{{url_for('products.home')}}">Cancelar</a>
+                        <a class="btn btn-outline-danger" href="{{url_for('products.home')}}">Cancelar</a>
                   </div>
                 </form>
 
