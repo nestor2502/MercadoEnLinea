@@ -150,6 +150,29 @@ def upload_product(name, price, description, image_file):
         return False
 
 def update_product(id_product, name, price, description, available, image_file):
+    """Updates a product, checks the security and integrity of the image file
+
+    Parameters
+    ----------
+    id_product : int
+        The product's id
+    name : str
+        The Product's name
+    price : int
+        The Product's price
+    description : str
+        The Product's description
+    available : boolean
+        The Product's availability
+    image_file : FILE
+        The Product's image
+
+    Returns
+    -------
+    boolean
+        True if the product was successfully updated
+        False if a issue happened, flask's flash feature is used to display the issue to the user.
+    """
     if name == '' or price == '' or description == '':
         flash("Campos incompletos, por favor llene todos los campos","error")
         return False;
@@ -235,7 +258,24 @@ def delete_product(id_product):
         return False
 
 def search_product(name):
-    return Product.query.filter_by(name=name).all()
+    """Search a product by the specific name
+
+    Parameters
+    ----------
+    name : str
+        The product's name
+
+    Returns
+    -------
+    Products
+        List of products with the same name
+    """
+    products = Product.query.all()
+    matchProducts = []
+    for product in products:
+        if product.name.__contains__(name):
+            matchProducts.append(product)
+    return matchProducts
 
 def get_my_shopping():
     """
