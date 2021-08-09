@@ -36,7 +36,6 @@
                         <span></span>
                         <span></span>
                         <span></span>
-                        <!--<i class="fas fa-align-left"></i>-->
                     </button>
                     {% if role == 'Comprador' %}
                         <form action="/search" method="GET" class="form-inline position-relative my-2">
@@ -50,8 +49,9 @@
                     <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
                       <span id="user-name">
                        {% if current_user.is_authenticated %}
-                        Hola {{current_user.name }} !
-                      <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=random&size=32&rounded=true">
+                       {{current_user.name }}
+
+                        <img src="https://ui-avatars.com/api/?name={{current_user.name}}&background=4141ab&size=32&rounded=true&color=ffffff">
                         {% endif %} </span>
                     </div>
                 </div>

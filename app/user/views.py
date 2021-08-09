@@ -36,6 +36,12 @@ def login():
             return redirect(url_for('user.login'))
     return render_template('login.html')
 
+@user.route('/profile', methods = ['GET'])
+@login_required
+def get_my_profile():
+    role = user_ctrl.get_user_role()
+    return render_template('profile.html',user = current_user, role = role)
+
 @user.route('/logout')
 @login_required
 def logout():
