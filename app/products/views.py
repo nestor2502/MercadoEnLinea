@@ -22,7 +22,8 @@ def home():
 @products.route('/upload_product', methods = ['GET','POST'])
 @login_required
 def upload_product():
-    if user_ctrl.get_user_role() != "Vendedor":
+    role = user_ctrl.get_user_role()
+    if role != "Vendedor":
         return render_template('404-error.html')
     if request.method == 'POST':
         name = request.form['name']
@@ -32,14 +33,15 @@ def upload_product():
 
         if products_ctrl.upload_product(name, price, description, image_filepath):
             return redirect(url_for('products.home'))
-    return render_template('add-update-product.html')
+    return render_template('add-update-product.html', role=role)
 
 
 
 @products.route('/update_product/<id_product>', methods = ['GET','POST'])
 @login_required
 def update_product(id_product):
-    if user_ctrl.get_user_role() != "Vendedor":
+    role = user_ctrl.get_user_role()
+    if role != "Vendedor":
         return render_template('404-error.html')
 
     if not products_ctrl.verify_product(id_product):
@@ -62,7 +64,7 @@ def update_product(id_product):
     description = product.description
     available = "on" if product.available else "off"
 
-    return render_template('add-update-product.html', id_product=id_product,
+    return render_template('add-update-product.html', role=role, id_product=id_product,
             image=image, name=name, price=price, description=description, available=available)
 
 @products.route('/delete_product/<id_product>', methods = ['GET'])

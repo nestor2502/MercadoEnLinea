@@ -1,15 +1,5 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 
-
-{% block title %}
-    {% if id_product %}
-        Actualizar Producto
-    {% endif %}
-
-    {% if not id_product %}
-        Agregar Producto
-    {% endif %}
-{% endblock %}
 
 {% block head %}
  {{ super() }}
@@ -18,59 +8,25 @@
 {% endblock %}
 
 
-{% block content %}
+{% block mainContent %}
 <body>
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header mr-2">
-                <img src="../static/img/Maanostítulo.png" width="60" height="60">
-            </div>
-            {% include "sidebar-vendedor.html" %}
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid" id="topbar">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info position-relative">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <!--<i class="fas fa-align-left"></i>-->
-                    </button>
-
-                    <div class="nav navbar-brand ml-auto" id="navbarSupportedContent">
-
-                      <span id="user-name">
-                       {% if current_user.is_authenticated %}
-                        Hola {{ current_user.name }} !
-                        <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&background=random&size=32&rounded=true">
+                <div id="main-content">
+                    <div class="title text-center">
+                        {% if id_product %}
+                            <h3>Actualiza tu producto</h3>
                         {% endif %}
-                      </span>
+
+                        {% if not id_product %}
+                            <h3>Agrega tu producto</h3>
+                        {% endif %}
                     </div>
-                </div>
-            </nav>
-            <div id="main-content-bg">
-              <div id="main-content">
-                <div class="title text-center">
 
                     {% if id_product %}
-                        <h3>Actualiza tu producto</h3>
+                    <form action="/update_product/{{ id_product }}" method="POST" enctype="multipart/form-data">
                     {% endif %}
 
                     {% if not id_product %}
-                        <h3>Agrega tu producto</h3>
-                    {% endif %}
-                </div>
-
-                    {% if id_product %}
-                        <form action="/update_product/{{ id_product }}" method="POST" enctype="multipart/form-data">
-                    {% endif %}
-
-                    {% if not id_product %}
-                        <form action="/upload_product" method="POST" enctype="multipart/form-data">
+                    <form action="/upload_product" method="POST" enctype="multipart/form-data">
                     {% endif %}
                   <div class="container">
                     <div class="left">
@@ -93,13 +49,13 @@
                                 <span class="input-group-text" id="addon-wrapping">$</span>
                               </div>
 
-                        {% if price %}
-                        <input type="number" class="form-control" id="priceProduct" value="{{ price }}" name="price">
-                        {% endif %}
+                                {% if price %}
+                                <input type="number" class="form-control" id="priceProduct" value="{{ price }}" name="price">
+                                {% endif %}
 
-                        {% if not price %}
-                            <input type="number" class="form-control" id="priceProduct" placeholder="Precio" name="price">
-                        {% endif %}
+                                {% if not price %}
+                                    <input type="number" class="form-control" id="priceProduct" placeholder="Precio" name="price">
+                                {% endif %}
 
                             </div>
                           </div>
@@ -162,9 +118,9 @@
                         {% endif %}
                       </div>
                     </div>
-                  </div>
-                  <div class="text-center">
+                  </div> <!-- end container -->
 
+                  <div class="text-center">
                         {% if id_product %}
                             <button id="updateButton" type="submit" class="btn btn-success">Actualizar</button>
                         {% endif %}
@@ -175,16 +131,13 @@
                         <a class="btn btn-danger" href="{{url_for('products.home')}}">Cancelar</a>
                   </div>
                 </form>
-              </div>
-            </div>
-        </div>
-    </div>
-    {% include "modal.html" %}
+
+                </div> <!-- end main content -->
+{% include "modal.html" %}
 </body>
 
+{% endblock %}
 
 {% block scripts %}
  <script src = "../static/js/add-edit-product.js"></script>
-{% endblock %}
-
 {% endblock %}
