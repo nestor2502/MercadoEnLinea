@@ -154,3 +154,6 @@ def logout():
 
 def get_user_role():
     return Role.query.filter_by(id = current_user.role_id).first().name
+
+def get_user_info(user_id):
+    return User.query.get(user_id)

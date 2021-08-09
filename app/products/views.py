@@ -113,7 +113,8 @@ def getProduct():
         rates = product_info[1]
         average_stars = product_info[0]
         can_review = products_ctrl.purchase_exists(product_id)
-        return render_template('product-detail.html', average_stars = average_stars, product=product, rates = rates, role = role, can_review = can_review)
+        seller = user_ctrl.get_user_info(product.user_id)
+        return render_template('product-detail.html', average_stars = average_stars, product=product, rates = rates, role = role, can_review = can_review, seller = seller)
 
 @products.route('/my-shopping', methods = ['GET'])
 @login_required

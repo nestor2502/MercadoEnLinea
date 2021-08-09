@@ -226,8 +226,10 @@ def get_top_products(limit):
     counter = 0
     #Obtains a duple where (product_id,product_orders) using counting and grouping.
     top_products = db.session.query(Order.product_id, count_).group_by(Order.product_id).order_by(count_.desc()).all()
+    print("top_products")
+    print(top_products)
     for product_id,purchases in top_products:
-        if get_product(product_id).available:
+        if get_product(product_id) is not None and get_product(product_id).available:
             top_products_list.append(get_product(product_id))
             counter +=1
         if counter >= limit:
@@ -287,7 +289,8 @@ def get_my_shopping():
     """
     product_list = []
     for order in current_user.buyer_orders:
-        product_list.append([order.date ,get_product(order.product_id)])
+        if get_product(order.product_id) is not None: 
+            product_list.append([order.date ,get_product(order.product_id)])
     return product_list
 
 def buy_product(product_id):
