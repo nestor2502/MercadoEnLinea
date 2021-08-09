@@ -91,7 +91,10 @@
                                 {{ product.description }}                                </p>
                                 <h6>Información del Vendedor</h6>
                                 <div>
-                                    <button type="button" class="btn btn-primary">Comprar</button>
+                                    <a      href="/buy_product/{{product.id}}"
+                                            type="button" 
+                                            class="btn btn-primary"
+                                            >Comprar</a>
                                 </div>
                             </div>
                         </div>
@@ -182,8 +185,13 @@
             </div>
         </div>
     </div>
-    {% include "modal.html" %}
 </body>
 
 
 {% endblock %}
+
+{% block scripts %}
+<script src = "../static/js/product-detail.js"></script>
+{% endblock %}
+
+
